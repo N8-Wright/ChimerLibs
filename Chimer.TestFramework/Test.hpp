@@ -5,7 +5,7 @@
 #include <string_view>
 #include <optional>
 #include <sstream>
-
+#include <cstring>
 namespace Chimer::TestFramework
 {
 	class Test
@@ -31,15 +31,36 @@ namespace Chimer::TestFramework
 		template<typename T, typename U>
 		bool AssertEqImpl(const T& lhs, const U& rhs)
 		{
-			if (lhs != rhs)
+			using TL = std::decay_t<T>;
+			using TR = std::decay_t<U>;
+			constexpr bool isCString =
+				(std::is_same_v<TL, const char*> && std::is_same_v<TR, const char*>) ||
+				(std::is_array_v<T> && std::is_array_v<U> &&
+					std::is_same_v<std::remove_extent_t<T>, char> &&
+					std::is_same_v<std::remove_extent_t<U>, char>);
+
+			if constexpr (isCString)
 			{
-				std::stringstream failure;
-				failure << lhs << " does not equal " << rhs;
-				MarkFailed(failure.str());
-				return false;
+				if (std::strcmp(lhs, rhs) != 0)
+				{
+					std::stringstream failure;
+					failure << "\"" << lhs << "\" does not equal \"" << rhs << "\"";
+					MarkFailed(failure.str());
+					return false;
+				}
+
+				return true;
 			}
 			else
 			{
+				if (lhs != rhs)
+				{
+					std::stringstream failure;
+					failure << lhs << " does not equal " << rhs;
+					MarkFailed(failure.str());
+					return false;
+				}
+
 				return true;
 			}
 		}

@@ -27,6 +27,27 @@ TEST(EqualityTests, Strings)
 	ASSERT_EQ(std::string("foo"), std::string("foo"));
 }
 
+TEST(EqualityTests, StringViews)
+{
+	ASSERT_EQ(std::string_view("yard"), std::string_view("yard"));
+}
+
+TEST(EqualityTests, CharPointers)
+{
+	const char* lhs = "bar";
+	const char* rhs = "bar";
+
+	ASSERT_EQ(lhs, rhs);
+}
+
+TEST(EqualityTests, CharArrays)
+{
+	const char lhs[] = "baz";
+	const char rhs[] = "baz";
+
+	ASSERT_EQ(lhs, rhs);
+}
+
 int main(int argc, const char** argv)
 {
 	return EqualityTests.Run(argc, argv);
