@@ -15,11 +15,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClInclude Include="ConsoleLogger.hpp" />
     <ClInclude Include="Logger.hpp" />
     <ClInclude Include="LoggerDelegate.hpp" />
     <ClInclude Include="LogLevel.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ConsoleLogger.cpp" />
     <ClCompile Include="Logger.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

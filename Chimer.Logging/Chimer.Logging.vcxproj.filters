@@ -24,9 +24,15 @@
     <ClInclude Include="LoggerDelegate.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ConsoleLogger.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleLogger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3,8 +3,8 @@
 
 namespace Chimer::TestFramework
 {
-	Test::Test(std::string_view category, std::string_view testName)
-		: m_category(category), m_name(testName), m_failed(false)
+	Test::Test(std::string_view testClass, std::string_view testName)
+		: m_testClass(testClass), m_testName(testName), m_failed(false)
 	{
 	}
 
@@ -22,5 +22,15 @@ namespace Chimer::TestFramework
 	std::string_view Test::Reason() const noexcept
 	{
 		return m_failedReason;
+	}
+
+	std::string_view Test::TestClass() const noexcept
+	{
+		return m_testClass;
+	}
+
+	std::string_view Test::TestName() const noexcept
+	{
+		return m_testName;
 	}
 }

@@ -11,4 +11,9 @@ namespace Chimer::Logging
 	{
 		return m_logLevel;
 	}
+
+	bool Logger::ConfiguredToLog(LogLevel logLevel) const noexcept
+	{
+		return m_logLevel >= logLevel;
+	}
 }

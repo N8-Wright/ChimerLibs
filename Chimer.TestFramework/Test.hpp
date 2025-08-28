@@ -10,18 +10,21 @@ namespace Chimer::TestFramework
 {
 	class Test
 	{
-		std::string m_category;
-		std::string m_name;
+		std::string m_testClass;
+		std::string m_testName;
 		bool m_failed;
 		std::string m_failedReason;
 
 		void MarkFailed(std::string reason);
 
 	public:
-		Test(std::string_view category, std::string_view testName);
+		Test(std::string_view testClass, std::string_view testName);
 		virtual ~Test() = default;
 		bool Failed() const noexcept;
+
 		std::string_view Reason() const noexcept;
+		std::string_view TestClass() const noexcept;
+		std::string_view TestName() const noexcept;
 
 		virtual void Run() = 0;
 
