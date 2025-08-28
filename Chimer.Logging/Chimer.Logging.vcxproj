@@ -16,6 +16,7 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClInclude Include="Logger.hpp" />
+    <ClInclude Include="LoggerDelegate.hpp" />
     <ClInclude Include="LogLevel.hpp" />
   </ItemGroup>
   <ItemGroup>
