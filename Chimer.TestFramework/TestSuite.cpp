@@ -6,7 +6,7 @@
 
 using namespace Chimer::Logging;
 
-auto testFailure = MakeLoggerDelegate(
+auto logTestFailure = MakeLoggerDelegate(
 	LogLevel::Error,
 	[](std::string_view testClass, std::string_view testName, std::string_view reason)
 	{
@@ -16,7 +16,7 @@ auto testFailure = MakeLoggerDelegate(
 	}
 );
 
-auto testSuccess = MakeLoggerDelegate(
+auto logTestSuccess = MakeLoggerDelegate(
 	LogLevel::Info,
 	[](std::string_view testClass, std::string_view testName)
 	{
@@ -26,10 +26,22 @@ auto testSuccess = MakeLoggerDelegate(
 	}
 );
 
+auto logTestSuiteRunInfo = MakeLoggerDelegate(
+	LogLevel::Info,
+	[](std::string_view testSuite, int testsPassed, int testsFailed)
+	{
+		std::stringstream os;
+		os << "Finished running all tests in " << testSuite << ". "
+			<< "Tests Passed: " << testsPassed << ". "
+			<< "Tests Failed: " << testsFailed << ".";
+		return os.str();
+	}
+);
+
 namespace Chimer::TestFramework
 {
-	TestSuite::TestSuite(std::shared_ptr<Logging::Logger> logger)
-		: m_logger(std::move(logger))
+	TestSuite::TestSuite(std::string_view name, std::shared_ptr<Logging::Logger> logger)
+		: m_name(name), m_logger(std::move(logger))
 	{
 	}
 
@@ -40,21 +52,24 @@ namespace Chimer::TestFramework
 
 	int TestSuite::Run(int, const char**)
 	{
-		int exitCode = 0;
+		int testsFailed = 0;
+		int testsPassed = 0;
 		for (auto& test : m_tests)
 		{
 			test->Run();
 			if (test->Failed())
 			{
-				testFailure(m_logger, test->TestClass(), test->TestName(), test->Reason());
-				exitCode++;
+				logTestFailure(m_logger, m_name, test->TestName(), test->Reason());
+				testsFailed++;
 			}
 			else
 			{
-				testSuccess(m_logger, test->TestClass(), test->TestName());
+				logTestSuccess(m_logger, m_name, test->TestName());
+				testsPassed++;
 			}
 		}
 
-		return exitCode;
+		logTestSuiteRunInfo(m_logger, m_name, testsPassed, testsFailed);
+		return testsFailed;
 	}
 }

@@ -1,6 +1,7 @@
 #include "ConsoleLogger.hpp"
 
 #include <iostream>
+#include <chrono>
 
 namespace Chimer::Logging
 {
@@ -13,7 +14,9 @@ namespace Chimer::Logging
 	{
 		if (ConfiguredToLog(logLevel))
 		{
-			std::cout << message << "\n";
+			const auto now = std::chrono::system_clock::now();
+			std::time_t time = std::chrono::system_clock::to_time_t(now);
+			std::cout << std::put_time(std::localtime(&time), "%Y-%m-%d %H:%M:%S") << " [" << logLevel << "] - " << message << "\n";
 		}
 	}
 }
