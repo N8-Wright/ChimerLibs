@@ -65,6 +65,8 @@ namespace Chimer::Logging
 		using ArgsTuple = std::tuple<Args...>;
 	};
 
+	// NOTE: The unary + operator on a lambda converts it to a function pointer if possible.
+	// See: https://stackoverflow.com/questions/70505162/why-would-one-want-to-put-a-unary-plus-operator-in-front-of-a-c-lambda
 	template <typename Lambda>
 	struct LambdaTraits : LambdaTraits<decltype(+std::declval<Lambda>())> {};
 
@@ -84,5 +86,4 @@ namespace Chimer::Logging
 			);
 		}(std::make_index_sequence<std::tuple_size_v<ArgsTuple>>{});
 	}
-
 }
