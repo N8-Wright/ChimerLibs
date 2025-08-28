@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-TEST_SUITE(ExampleTests);
+TEST_SUITE_DEFINE(ExampleTests);
 TEST(ExampleTests, SimpleChecks)
 {
 	ASSERT_EQ(1, 2);

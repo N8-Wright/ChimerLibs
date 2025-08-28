@@ -19,5 +19,8 @@ namespace Chimer::TestFramework
 	};
 }
 
-#define TEST_SUITE(suite) \
-	static Chimer::TestFramework::TestSuite suite(#suite, std::make_shared<Chimer::Logging::ConsoleLogger>(Chimer::Logging::LogLevel::Info))
+#define TEST_SUITE_DECLARE(suite) \
+	extern Chimer::TestFramework::TestSuite suite;
+
+#define TEST_SUITE_DEFINE(suite) \
+	Chimer::TestFramework::TestSuite suite(#suite, std::make_shared<Chimer::Logging::ConsoleLogger>(Chimer::Logging::LogLevel::Info))
