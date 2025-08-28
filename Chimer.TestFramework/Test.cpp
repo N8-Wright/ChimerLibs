@@ -28,4 +28,9 @@ namespace Chimer::TestFramework
 	{
 		return m_testName;
 	}
+
+	TestFailureResult Test::GetFailureResult() const
+	{
+		return { m_testName, m_failedReason };
+	}
 }

@@ -1,9 +1,30 @@
+#include "Chimer.Logging/LoggerDelegate.hpp"
+#include "Chimer.Logging/ConsoleLogger.hpp"
+
 #include "TestDriver.hpp"
 #include "TestSuite.hpp"
-#include <iostream>
+#include <sstream>
+
+using namespace Chimer::Logging;
+
+static auto logTestResults = MakeLoggerDelegate(
+	LogLevel::Info,
+	[](size_t testsPassed, size_t testsFailed)
+	{
+		std::stringstream os;
+		os << "Total tests passed: " << testsPassed << ". "
+			<< "Total tests failed: " << testsFailed << ".";
+		return os.str();
+	}
+);
 
 namespace Chimer::TestFramework
 {
+	TestDriver::TestDriver(std::shared_ptr<Logging::Logger> logger)
+		: m_logger(std::move(logger))
+	{
+	}
+
 	void TestDriver::AddTestSuite(TestSuite& suite)
 	{
 		m_suites.push_back(suite);
@@ -11,18 +32,23 @@ namespace Chimer::TestFramework
 
 	int TestDriver::Run(int argc, const char** argv)
 	{
-		int result = 0;
+		std::vector<TestSuiteResult> results;
+		size_t testsPassed = 0;
+		size_t testsFailed = 0;
 		for (auto& suite : m_suites)
 		{
-			result += suite.get().Run(argc, argv);
+			const auto result = suite.get().Run(argc, argv);
+			testsPassed += result.TestsPassed;
+			testsFailed += result.TestsFailed;
 		}
 
-		return result;
+		logTestResults(m_logger, testsPassed, testsFailed);
+		return static_cast<int>(testsFailed);
 	}
 
 	TestDriver& GetDriver()
 	{
-		static TestDriver testDriver;
+		static TestDriver testDriver(std::make_shared<ConsoleLogger>(LogLevel::Info));
 		return testDriver;
 	}
 

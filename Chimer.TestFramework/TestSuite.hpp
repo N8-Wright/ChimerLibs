@@ -1,5 +1,6 @@
 #pragma once
 #include "Chimer.TestFramework/TestDriver.hpp"
+#include "Chimer.TestFramework/TestSuiteResult.hpp"
 
 #include "Chimer.Logging/Logger.hpp"
 #include "Chimer.Logging/ConsoleLogger.hpp"
@@ -17,7 +18,7 @@ namespace Chimer::TestFramework
 	public:
 		TestSuite(std::string_view name, std::shared_ptr<Logging::Logger> logger);
 		void AddTest(std::unique_ptr<Test> test);
-		int Run(int argc, const char** argv);
+		TestSuiteResult Run(int argc, const char** argv);
 	};
 }
 

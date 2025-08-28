@@ -61,8 +61,9 @@ namespace Chimer::TestFramework
 		m_tests.push_back(std::move(test));
 	}
 
-	int TestSuite::Run(int, const char**)
+	TestSuiteResult TestSuite::Run(int, const char**)
 	{
+		TestSuiteResult suiteResult{};
 		int testsFailed = 0;
 		int testsPassed = 0;
 		for (auto& test : m_tests)
@@ -70,17 +71,19 @@ namespace Chimer::TestFramework
 			test->Run();
 			if (test->Failed())
 			{
-				logTestFailure(m_logger, m_name, test->TestName(), test->Reason());
-				testsFailed++;
+				auto result = test->GetFailureResult();
+				logTestFailure(m_logger, m_name, result.TestName, result.Reason);
+				suiteResult.TestsFailed++;
+				suiteResult.FailedTests.push_back(std::move(result));
 			}
 			else
 			{
 				logTestSuccess(m_logger, m_name, test->TestName());
-				testsPassed++;
+				suiteResult.TestsPassed++;
 			}
 		}
 
 		logTestSuiteRunInfo(m_logger, m_name, testsPassed, testsFailed);
-		return testsFailed;
+		return suiteResult;
 	}
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "Chimer.TestFramework/TestSuite.hpp"
+#include "Chimer.TestFramework/TestFailureResult.hpp"
 
 #include <string>
 #include <string_view>
@@ -48,6 +49,7 @@ namespace Chimer::TestFramework
 
 		std::string_view Reason() const noexcept;
 		std::string_view TestName() const noexcept;
+		TestFailureResult GetFailureResult() const;
 
 		virtual void Run() = 0;
 
