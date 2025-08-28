@@ -11,6 +11,7 @@ namespace Chimer::Logging
 		Warning = 2,
 		Info = 3,
 		Detail = 4,
+		Trace = 5,
 	};
 
 	inline std::ostream& operator<<(std::ostream& os, LogLevel level)
@@ -22,6 +23,7 @@ namespace Chimer::Logging
 			case LogLevel::Warning: os << "Warning";  break;
 			case LogLevel::Info:    os << "Info";     break;
 			case LogLevel::Detail:  os << "Detail";   break;
+			case LogLevel::Trace:   os << "Trace";    break;
 			default:                os << "Unknown";  break;
 		}
 

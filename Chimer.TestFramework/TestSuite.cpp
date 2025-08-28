@@ -6,7 +6,7 @@
 
 using namespace Chimer::Logging;
 
-auto logTestFailure = MakeLoggerDelegate(
+static auto logTestFailure = MakeLoggerDelegate(
 	LogLevel::Error,
 	[](std::string_view testClass, std::string_view testName, std::string_view reason)
 	{
@@ -16,7 +16,7 @@ auto logTestFailure = MakeLoggerDelegate(
 	}
 );
 
-auto logTestSuccess = MakeLoggerDelegate(
+static auto logTestSuccess = MakeLoggerDelegate(
 	LogLevel::Info,
 	[](std::string_view testClass, std::string_view testName)
 	{
@@ -26,7 +26,7 @@ auto logTestSuccess = MakeLoggerDelegate(
 	}
 );
 
-auto logTestSuiteRunInfo = MakeLoggerDelegate(
+static auto logTestSuiteRunInfo = MakeLoggerDelegate(
 	LogLevel::Info,
 	[](std::string_view testSuite, int testsPassed, int testsFailed)
 	{
@@ -47,6 +47,17 @@ namespace Chimer::TestFramework
 
 	void TestSuite::AddTest(std::unique_ptr<Test> test)
 	{
+		static auto logTestRegister = MakeLoggerDelegate(
+			LogLevel::Detail,
+			[](std::string_view testClass, std::string_view testName)
+			{
+				std::stringstream os;
+				os << "Registered " << testClass << "::" << testName;
+				return os.str();
+			}
+		);
+
+		logTestRegister(m_logger, m_name, test->TestName());
 		m_tests.push_back(std::move(test));
 	}
 
