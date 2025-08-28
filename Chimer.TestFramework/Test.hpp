@@ -141,23 +141,23 @@ namespace Chimer::TestFramework
 #define ASSERT_EQ(lhs, rhs) \
 	if (!AssertEqual(lhs, rhs)) return
 
-#define TEST(category, testName) \
-	class category##_##testName : public Chimer::TestFramework::Test \
+#define TEST(testClass, testName) \
+	class testClass##_##testName : public Chimer::TestFramework::Test \
 	{ \
 	public: \
-		category##_##testName() \
+		testClass##_##testName() \
 			: Chimer::TestFramework::Test(#testName) \
 		{ \
 		} \
 		void Run() override; \
 	}; \
-	class category##_##testName##_adder \
+	class testClass##_##testName##_adder \
 	{ \
 	public: \
-		category##_##testName##_adder() \
+		testClass##_##testName##_adder() \
 		{ \
-			category.AddTest(std::make_unique<category##_##testName>()); \
+			testClass.AddTest(std::make_unique<testClass##_##testName>()); \
 		} \
 	}; \
-	static category##_##testName##_adder category##_##testName##_adderInstance; \
-	void category##_##testName::Run()
+	static testClass##_##testName##_adder testClass##_##testName##_adderInstance; \
+	void testClass##_##testName::Run()
