@@ -25,10 +25,12 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClInclude Include="Test.hpp" />
+    <ClInclude Include="TestDriver.hpp" />
     <ClInclude Include="TestSuite.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Test.cpp" />
+    <ClCompile Include="TestDriver.cpp" />
     <ClCompile Include="TestSuite.cpp" />
   </ItemGroup>
   <ItemGroup>

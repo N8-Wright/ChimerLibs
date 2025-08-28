@@ -27,16 +27,12 @@
   <ItemGroup>
     <ClCompile Include="EqualTests.cpp" />
     <ClCompile Include="NotEqualTests.cpp" />
-    <ClCompile Include="TestDriver.cpp" />
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Chimer.TestFramework\Chimer.TestFramework.vcxproj">
       <Project>{0f83becc-081c-4257-83e9-5327189095ce}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="EqualTests.hpp" />
-    <ClInclude Include="NotEqualTests.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

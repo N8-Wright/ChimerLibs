@@ -1,5 +1,5 @@
 #pragma once
-#include "TestSuite.hpp"
+#include "Chimer.TestFramework/TestSuite.hpp"
 
 #include <string>
 #include <string_view>

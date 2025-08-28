@@ -1,4 +1,6 @@
 #pragma once
+#include "Chimer.TestFramework/TestDriver.hpp"
+
 #include "Chimer.Logging/Logger.hpp"
 #include "Chimer.Logging/ConsoleLogger.hpp"
 
@@ -23,4 +25,13 @@ namespace Chimer::TestFramework
 	extern Chimer::TestFramework::TestSuite suite;
 
 #define TEST_SUITE_DEFINE(suite) \
-	Chimer::TestFramework::TestSuite suite(#suite, std::make_shared<Chimer::Logging::ConsoleLogger>(Chimer::Logging::LogLevel::Info))
+	Chimer::TestFramework::TestSuite suite(#suite, std::make_shared<Chimer::Logging::ConsoleLogger>(Chimer::Logging::LogLevel::Info)); \
+	class suite##_adder \
+	{ \
+	public: \
+		suite##_adder() \
+		{ \
+			Chimer::TestFramework::GetDriver().AddTestSuite(suite); \
+		} \
+	}; \
+	static suite##_adder suite##_adderInstance

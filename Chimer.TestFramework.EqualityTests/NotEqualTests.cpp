@@ -1,4 +1,4 @@
-#include "NotEqualTests.hpp"
+#include "Chimer.TestFramework/Test.hpp"
 
 TEST_SUITE_DEFINE(NotEqualTests);
 

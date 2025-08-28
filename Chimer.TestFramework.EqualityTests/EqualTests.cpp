@@ -1,4 +1,4 @@
-#include "EqualTests.hpp"
+#include "Chimer.TestFramework/Test.hpp"
 
 #include <compare>
 

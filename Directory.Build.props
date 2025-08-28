@@ -27,6 +27,9 @@
 			<IntrinsicFunctions>true</IntrinsicFunctions>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 		</ClCompile>
+		<Link>
+			<LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+		</Link>
 	</ItemDefinitionGroup>
 
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
