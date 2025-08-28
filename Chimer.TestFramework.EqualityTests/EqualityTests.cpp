@@ -1,5 +1,7 @@
 #include "Chimer.TestFramework/Test.hpp"
 
+#include <compare>
+
 TEST_SUITE(EqualityTests);
 
 TEST(EqualityTests, Integers)
@@ -48,6 +50,25 @@ TEST(EqualityTests, CharArrays)
 	ASSERT_EQ(lhs, rhs);
 }
 
+class Foo
+{
+public:
+	int x;
+	double y;
+	auto operator<=>(const Foo&) const = default;
+	friend std::ostream& operator<<(std::ostream& os, const Foo& foo)
+	{
+		return os << "[" << foo.x << ", " << foo.y << "]";
+	}
+};
+
+TEST(EqualityTests, Foo)
+{
+	Foo lhs { 1, 9.1 };
+	Foo rhs { 1, 9.1 };
+
+	ASSERT_EQ(lhs, rhs);
+}
 int main(int argc, const char** argv)
 {
 	return EqualityTests.Run(argc, argv);

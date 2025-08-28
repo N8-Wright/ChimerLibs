@@ -5,9 +5,34 @@
 #include <string_view>
 #include <optional>
 #include <sstream>
+#include <type_traits>
+#include <concepts>
 #include <cstring>
+
+template<typename T>
+concept Streamable = requires(std::ostream & os, T value)
+{
+	{ os << value } -> std::same_as<std::ostream&>;
+};
+
 namespace Chimer::TestFramework
 {
+	template<typename T>
+	std::string FormatValue(const T& value)
+	{
+		if constexpr (Streamable<T>)
+		{
+			std::ostringstream oss;
+			oss << value;
+			return oss.str();
+		}
+		else
+		{
+			// Fallback for non-streamable types
+			return "<unprintable>";
+		}
+	}
+
 	class Test
 	{
 		std::string m_testClass;
@@ -51,17 +76,21 @@ namespace Chimer::TestFramework
 
 				return true;
 			}
-			else
+			else if constexpr (requires { lhs != rhs; })
 			{
 				if (lhs != rhs)
 				{
 					std::stringstream failure;
-					failure << lhs << " does not equal " << rhs;
+					failure << FormatValue(lhs) << " does not equal " << FormatValue(rhs);
 					MarkFailed(failure.str());
 					return false;
 				}
 
 				return true;
+			}
+			else
+			{
+				static_assert(sizeof(T) == 0, "AssertEqImpl: Cannot compare these types");
 			}
 		}
 	};
