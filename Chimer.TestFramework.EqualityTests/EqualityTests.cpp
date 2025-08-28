@@ -1,15 +1,30 @@
 #include "Chimer.TestFramework/Test.hpp"
 
-CHIMER_TEST_SUITE(EqualityTests);
+TEST_SUITE(EqualityTests);
 
-CHIMER_TEST(EqualityTests, Integers)
+TEST(EqualityTests, Integers)
 {
-	CHIMER_ASSERT_EQ(100, 100);
+	ASSERT_EQ(100, 100);
 }
 
-CHIMER_TEST(EqualityTests, Longs)
+TEST(EqualityTests, Longs)
 {
-	CHIMER_ASSERT_EQ(1L, 1L);
+	ASSERT_EQ(1L, 1L);
+}
+
+TEST(EqualityTests, Floats)
+{
+	ASSERT_EQ(77.7f, 77.7f);
+}
+
+TEST(EqualityTests, Doubles)
+{
+	ASSERT_EQ(99.9, 99.9);
+}
+
+TEST(EqualityTests, Strings)
+{
+	ASSERT_EQ(std::string("foo"), std::string("foo"));
 }
 
 int main(int argc, const char** argv)

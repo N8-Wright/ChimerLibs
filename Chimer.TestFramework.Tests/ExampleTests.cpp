@@ -2,11 +2,11 @@
 
 #include <iostream>
 
-CHIMER_TEST_SUITE(ExampleTests);
-CHIMER_TEST(ExampleTests, SimpleChecks)
+TEST_SUITE(ExampleTests);
+TEST(ExampleTests, SimpleChecks)
 {
-	CHIMER_ASSERT_EQ(1, 2);
-	CHIMER_ASSERT_EQ(2, 2);
+	ASSERT_EQ(1, 2);
+	ASSERT_EQ(2, 2);
 }
 
 int main(int argc, const char** argv)

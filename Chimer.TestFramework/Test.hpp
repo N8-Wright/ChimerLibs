@@ -46,10 +46,10 @@ namespace Chimer::TestFramework
 	};
 }
 
-#define CHIMER_ASSERT_EQ(lhs, rhs) \
+#define ASSERT_EQ(lhs, rhs) \
 	if (!AssertEqImpl(lhs, rhs)) return
 
-#define CHIMER_TEST(category, testName) \
+#define TEST(category, testName) \
 	class category##_##testName : public Chimer::TestFramework::Test \
 	{ \
 	public: \

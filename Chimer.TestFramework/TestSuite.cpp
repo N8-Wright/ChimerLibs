@@ -40,12 +40,14 @@ namespace Chimer::TestFramework
 
 	int TestSuite::Run(int, const char**)
 	{
+		int exitCode = 0;
 		for (auto& test : m_tests)
 		{
 			test->Run();
 			if (test->Failed())
 			{
 				testFailure(m_logger, test->TestClass(), test->TestName(), test->Reason());
+				exitCode++;
 			}
 			else
 			{
@@ -53,6 +55,6 @@ namespace Chimer::TestFramework
 			}
 		}
 
-		return 0;
+		return exitCode;
 	}
 }
