@@ -18,7 +18,7 @@ namespace Chimer::TestFramework
 	public:
 		TestSuite(std::string_view name, std::shared_ptr<Logging::Logger> logger);
 		void AddTest(std::unique_ptr<Test> test);
-		TestSuiteResult Run(int argc, const char** argv);
+		TestSuiteResult Run();
 	};
 }
 

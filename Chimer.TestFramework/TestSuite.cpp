@@ -21,7 +21,7 @@ namespace Chimer::TestFramework
 		m_tests.push_back(std::move(test));
 	}
 
-	TestSuiteResult TestSuite::Run(int, const char**)
+	TestSuiteResult TestSuite::Run()
 	{
 		TestSuiteResult suiteResult{};
 		int testsFailed = 0;

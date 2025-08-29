@@ -30,14 +30,14 @@ namespace Chimer::TestFramework
 		m_suites.push_back(suite);
 	}
 
-	int TestDriver::Run(int argc, const char** argv)
+	int TestDriver::Run(int, const char**)
 	{
 		std::vector<TestSuiteResult> results;
 		size_t testsPassed = 0;
 		size_t testsFailed = 0;
 		for (auto& suite : m_suites)
 		{
-			const auto result = suite.get().Run(argc, argv);
+			const auto result = suite.get().Run();
 			testsPassed += result.TestsPassed;
 			testsFailed += result.TestsFailed;
 		}
