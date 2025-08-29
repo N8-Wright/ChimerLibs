@@ -26,6 +26,7 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClCompile Include="EqualTests.cpp" />
+    <ClCompile Include="GreaterThanTests.cpp" />
     <ClCompile Include="NotEqualTests.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>

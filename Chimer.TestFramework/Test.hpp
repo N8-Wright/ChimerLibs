@@ -95,6 +95,29 @@ namespace Chimer::TestFramework
 		}
 
 		template<typename T, typename U>
+		bool AssertGreaterThan(const T& lhs, const U& rhs)
+		{
+			if constexpr (requires { lhs > rhs; })
+			{
+				if (lhs > rhs)
+				{
+					std::stringstream failure;
+					failure << FormatValue(lhs) << " is not greater than " << FormatValue(rhs);
+					MarkFailed(failure.str());
+					return false;
+				}
+
+				return true;
+			}
+			else
+			{
+				static_assert(false, "Cannot compare these types");
+			}
+
+			
+		}
+
+		template<typename T, typename U>
 		bool AssertEqual(const T& lhs, const U& rhs)
 		{
 			using TL = std::decay_t<T>;
@@ -131,11 +154,14 @@ namespace Chimer::TestFramework
 			}
 			else
 			{
-				static_assert(sizeof(T) == 0, "AssertEqImpl: Cannot compare these types");
+				static_assert(sizeof(T) == 0, "AssertEqual: Cannot compare these types");
 			}
 		}
 	};
 }
+
+#define ASSERT_GT(lhs, rhs) \
+	if (!AssertGreaterThan(lhs, rhs)) return
 
 #define ASSERT_NOT_EQ(lhs, rhs) \
 	if (!AssertNotEqual(lhs, rhs)) return
