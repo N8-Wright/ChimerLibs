@@ -7,7 +7,7 @@
 
 using namespace Chimer::Logging;
 
-static auto logTestResults = MakeLoggerDelegate(
+static auto logTestResults = MakeLoggerDelegate2(
 	LogLevel::Info,
 	[](size_t testsPassed, size_t testsFailed)
 	{

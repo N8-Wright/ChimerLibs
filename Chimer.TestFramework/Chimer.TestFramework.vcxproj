@@ -24,6 +24,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClInclude Include="LogMessages.hpp" />
     <ClInclude Include="Test.hpp" />
     <ClInclude Include="TestDriver.hpp" />
     <ClInclude Include="TestFailureResult.hpp" />
