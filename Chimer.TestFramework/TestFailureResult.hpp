@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <source_location>
 
 namespace Chimer::TestFramework
 {
@@ -8,5 +9,6 @@ namespace Chimer::TestFramework
 	{
 		std::string TestName;
 		std::string Reason;
+		std::source_location Location;
 	};
 }

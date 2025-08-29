@@ -9,6 +9,7 @@
 #include <type_traits>
 #include <concepts>
 #include <cstring>
+#include <source_location>
 
 template<typename T>
 concept Streamable = requires(std::ostream & os, T value)
@@ -39,8 +40,9 @@ namespace Chimer::TestFramework
 		std::string m_testName;
 		bool m_failed;
 		std::string m_failedReason;
+		std::source_location m_failedLocation;
 
-		void MarkFailed(std::string reason);
+		void MarkFailed(std::string reason, const std::source_location location);
 
 	public:
 		Test(std::string_view testName);
@@ -54,7 +56,9 @@ namespace Chimer::TestFramework
 		virtual void Run() = 0;
 
 		template<typename T, typename U>
-		bool AssertNotEqual(const T& lhs, const U& rhs)
+		bool AssertNotEqual(const T& lhs,
+			const U& rhs,
+			const std::source_location location = std::source_location::current())
 		{
 			using TL = std::decay_t<T>;
 			using TR = std::decay_t<U>;
@@ -70,7 +74,7 @@ namespace Chimer::TestFramework
 				{
 					std::stringstream failure;
 					failure << "\"" << lhs << "\" equals \"" << rhs << "\" when it should not";
-					MarkFailed(failure.str());
+					MarkFailed(failure.str(), location);
 					return false;
 				}
 
@@ -82,28 +86,7 @@ namespace Chimer::TestFramework
 				{
 					std::stringstream failure;
 					failure << FormatValue(lhs) << " equals " << FormatValue(rhs) << " when it should not";
-					MarkFailed(failure.str());
-					return false;
-				}
-
-				return true;
-			}
-			else
-			{
-				static_assert(sizeof(T) == 0, "AssertNotEq: Cannot compare these types");
-			}
-		}
-
-		template<typename T, typename U>
-		bool AssertGreaterThan(const T& lhs, const U& rhs)
-		{
-			if constexpr (requires { lhs > rhs; })
-			{
-				if (lhs > rhs)
-				{
-					std::stringstream failure;
-					failure << FormatValue(lhs) << " is not greater than " << FormatValue(rhs);
-					MarkFailed(failure.str());
+					MarkFailed(failure.str(), location);
 					return false;
 				}
 
@@ -113,12 +96,12 @@ namespace Chimer::TestFramework
 			{
 				static_assert(false, "Cannot compare these types");
 			}
-
-			
 		}
 
 		template<typename T, typename U>
-		bool AssertEqual(const T& lhs, const U& rhs)
+		bool AssertEqual(const T& lhs,
+			const U& rhs,
+			const std::source_location location = std::source_location::current())
 		{
 			using TL = std::decay_t<T>;
 			using TR = std::decay_t<U>;
@@ -134,7 +117,7 @@ namespace Chimer::TestFramework
 				{
 					std::stringstream failure;
 					failure << "\"" << lhs << "\" does not equal \"" << rhs << "\"";
-					MarkFailed(failure.str());
+					MarkFailed(failure.str(), location);
 					return false;
 				}
 
@@ -146,7 +129,7 @@ namespace Chimer::TestFramework
 				{
 					std::stringstream failure;
 					failure << FormatValue(lhs) << " does not equal " << FormatValue(rhs);
-					MarkFailed(failure.str());
+					MarkFailed(failure.str(), location);
 					return false;
 				}
 
@@ -154,7 +137,53 @@ namespace Chimer::TestFramework
 			}
 			else
 			{
-				static_assert(sizeof(T) == 0, "AssertEqual: Cannot compare these types");
+				static_assert(false, "Cannot compare these types");
+			}
+		}
+
+		template<typename T, typename U>
+		bool AssertGreaterThan(const T& lhs,
+			const U& rhs,
+			const std::source_location location = std::source_location::current())
+		{
+			if constexpr (requires { lhs > rhs; })
+			{
+				if (!(lhs > rhs))
+				{
+					std::stringstream failure;
+					failure << FormatValue(lhs) << " is not greater than " << FormatValue(rhs);
+					MarkFailed(failure.str(), location);
+					return false;
+				}
+
+				return true;
+			}
+			else
+			{
+				static_assert(false, "Cannot compare these types");
+			}
+		}
+
+		template<typename T, typename U>
+		bool AssertLessThan(const T& lhs,
+			const U& rhs,
+			const std::source_location location = std::source_location::current())
+		{
+			if constexpr (requires { lhs < rhs; })
+			{
+				if (!(lhs < rhs))
+				{
+					std::stringstream failure;
+					failure << FormatValue(lhs) << " is not less than " << FormatValue(rhs);
+					MarkFailed(failure.str(), location);
+					return false;
+				}
+
+				return true;
+			}
+			else
+			{
+				static_assert(false, "Cannot compare these types");
 			}
 		}
 	};
@@ -162,6 +191,9 @@ namespace Chimer::TestFramework
 
 #define ASSERT_GT(lhs, rhs) \
 	if (!AssertGreaterThan(lhs, rhs)) return
+
+#define ASSERT_LT(lhs, rhs) \
+	if (!AssertLessThan(lhs, rhs)) return
 
 #define ASSERT_NOT_EQ(lhs, rhs) \
 	if (!AssertNotEqual(lhs, rhs)) return

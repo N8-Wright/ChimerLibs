@@ -32,7 +32,7 @@ namespace Chimer::TestFramework
 			if (test->Failed())
 			{
 				auto result = test->GetFailureResult();
-				LogMessages::TestFailure(m_logger, m_name, result.TestName, result.Reason);
+				LogMessages::TestFailure(m_logger, m_name, result);
 				suiteResult.TestsFailed++;
 				suiteResult.FailedTests.push_back(std::move(result));
 			}

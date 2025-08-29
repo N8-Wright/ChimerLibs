@@ -1,4 +1,5 @@
 #pragma once
+#include "Chimer.TestFramework/TestFailureResult.hpp"
 
 #include "Chimer.Logging/LoggerDelegate.hpp"
 
@@ -21,10 +22,14 @@ namespace Chimer::TestFramework
 
 		static inline auto TestFailure = Logging::MakeLoggerDelegate2(
 			Logging::LogLevel::Error,
-			[](std::string_view testClass, std::string_view testName, std::string_view reason) static
+			[](std::string_view testClass, const TestFailureResult& failure) static
 		{
 			std::stringstream os;
-			os << "Failed test '" << testClass << "::" << testName << "' because " << reason;
+			os << "Failed test '" << testClass << "::" << failure.TestName << "' because " << failure.Reason << ": "
+				<< failure.Location.file_name() << '('
+				<< failure.Location.line() << ':'
+				<< failure.Location.column() << ")";
+
 			return os.str();
 		});
 

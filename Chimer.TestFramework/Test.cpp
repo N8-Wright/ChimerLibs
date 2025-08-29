@@ -8,10 +8,11 @@ namespace Chimer::TestFramework
 	{
 	}
 
-	void Test::MarkFailed(std::string reason)
+	void Test::MarkFailed(std::string reason, const std::source_location location)
 	{
 		m_failed = true;
 		m_failedReason = std::move(reason);
+		m_failedLocation = location;
 	}
 
 	bool Test::Failed() const noexcept
@@ -31,6 +32,6 @@ namespace Chimer::TestFramework
 
 	TestFailureResult Test::GetFailureResult() const
 	{
-		return { m_testName, m_failedReason };
+		return { m_testName, m_failedReason, m_failedLocation };
 	}
 }
