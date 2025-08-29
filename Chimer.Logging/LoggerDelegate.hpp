@@ -70,7 +70,7 @@ namespace Chimer::Logging
 	};
 
 	template <typename Lambda>
-	auto MakeLoggerDelegate2(LogLevel level, Lambda&& lambda)
+	auto MakeLoggerDelegate(LogLevel level, Lambda&& lambda)
 	{
 		using Traits = LambdaTraits<std::decay_t<Lambda>>;
 		using ReturnType = typename Traits::ReturnType;

@@ -42,12 +42,12 @@ namespace Chimer::TestFramework
 		std::string m_failedReason;
 		std::source_location m_failedLocation;
 
-		void MarkFailed(std::string reason, const std::source_location location);
 
 	public:
 		Test(std::string_view testName);
 		virtual ~Test() = default;
 		bool Failed() const noexcept;
+		void MarkFailed(std::string reason, const std::source_location location);
 
 		std::string_view Reason() const noexcept;
 		std::string_view TestName() const noexcept;
@@ -188,6 +188,19 @@ namespace Chimer::TestFramework
 		}
 	};
 }
+
+#define ASSERT_FALSE(expr) \
+	if (expr) \
+	{ \
+		MarkFailed("Expression was not false: '" #expr "'", std::source_location::current()); \
+		return; \
+	}
+#define ASSERT_TRUE(expr) \
+	if (!(expr)) \
+	{ \
+		MarkFailed("Expression was not true: '" #expr "'", std::source_location::current()); \
+		return; \
+	}
 
 #define ASSERT_GT(lhs, rhs) \
 	if (!AssertGreaterThan(lhs, rhs)) return

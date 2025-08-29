@@ -11,16 +11,7 @@ namespace Chimer::TestFramework
 	class LogMessages
 	{
 	public:
-		static inline auto TestRegister = MakeLoggerDelegate2(
-			Logging::LogLevel::Detail,
-			[](std::string_view testClass, std::string_view testName) static
-		{
-			std::stringstream os;
-			os << "Registered " << testClass << "::" << testName;
-			return os.str();
-		});
-
-		static inline auto TestFailure = Logging::MakeLoggerDelegate2(
+		static inline auto TestFailure = Logging::MakeLoggerDelegate(
 			Logging::LogLevel::Error,
 			[](std::string_view testClass, const TestFailureResult& failure) static
 		{
@@ -33,7 +24,7 @@ namespace Chimer::TestFramework
 			return os.str();
 		});
 
-		static inline auto TestSuccess = MakeLoggerDelegate2(
+		static inline auto TestSuccess = MakeLoggerDelegate(
 			Logging::LogLevel::Info,
 			[](std::string_view testClass, std::string_view testName) static
 		{
@@ -42,7 +33,7 @@ namespace Chimer::TestFramework
 			return os.str();
 		});
 
-		static inline auto TestSuiteRunInfo = MakeLoggerDelegate2(
+		static inline auto TestSuiteRunInfo = MakeLoggerDelegate(
 			Logging::LogLevel::Info,
 			[](std::string_view testSuite, int testsPassed, int testsFailed) static
 		{

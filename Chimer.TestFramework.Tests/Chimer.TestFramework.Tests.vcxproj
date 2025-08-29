@@ -27,10 +27,12 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClCompile Include="EqualTests.cpp" />
+    <ClCompile Include="FalseTests.cpp" />
     <ClCompile Include="GreaterThanTests.cpp" />
     <ClCompile Include="LessThanTests.cpp" />
     <ClCompile Include="NotEqualTests.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="TrueTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Chimer.TestFramework\Chimer.TestFramework.vcxproj">

@@ -17,7 +17,16 @@ namespace Chimer::TestFramework
 
 	void TestSuite::AddTest(std::unique_ptr<Test> test)
 	{
-		LogMessages::TestRegister(m_logger, m_name, test->TestName());
+		static auto TestRegister = MakeLoggerDelegate(
+			Logging::LogLevel::Detail,
+			[](std::string_view testClass, std::string_view testName) static
+		{
+			std::stringstream os;
+			os << "Registered " << testClass << "::" << testName;
+			return os.str();
+		});
+
+		TestRegister(m_logger, m_name, test->TestName());
 		m_tests.push_back(std::move(test));
 	}
 
