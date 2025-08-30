@@ -5,10 +5,10 @@
 
 namespace Chimer::TestFramework
 {
-	struct TestFailureResult
-	{
-		std::string TestName;
-		std::string Reason;
-		std::source_location Location;
-	};
+    struct TestFailureResult
+    {
+        std::string TestName;
+        std::string Reason;
+        std::source_location Location;
+    };
 }

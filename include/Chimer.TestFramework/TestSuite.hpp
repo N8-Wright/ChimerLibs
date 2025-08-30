@@ -9,30 +9,31 @@
 #include <memory>
 namespace Chimer::TestFramework
 {
-	class Test;
-	class TestSuite
-	{
-		std::string m_name;
-		std::vector<std::unique_ptr<Test>> m_tests;
-		std::shared_ptr<Logging::Logger> m_logger;
-	public:
-		TestSuite(std::string_view name, std::shared_ptr<Logging::Logger> logger);
-		void AddTest(std::unique_ptr<Test> test);
-		TestSuiteResult Run();
-	};
+    class Test;
+    class TestSuite
+    {
+        std::string m_name;
+        std::vector<std::unique_ptr<Test>> m_tests;
+        std::shared_ptr<Logging::Logger> m_logger;
+
+    public:
+        TestSuite(std::string_view name, std::shared_ptr<Logging::Logger> logger);
+        void AddTest(std::unique_ptr<Test> test);
+        TestSuiteResult Run();
+    };
 }
 
 #define TEST_SUITE_DECLARE(suite) \
-	extern Chimer::TestFramework::TestSuite suite;
+    extern Chimer::TestFramework::TestSuite suite;
 
-#define TEST_SUITE_DEFINE(suite) \
-	Chimer::TestFramework::TestSuite suite(#suite, std::make_shared<Chimer::Logging::ConsoleLogger>(Chimer::Logging::LogLevel::Info)); \
-	class suite##_adder \
-	{ \
-	public: \
-		suite##_adder() \
-		{ \
-			Chimer::TestFramework::GetDriver().AddTestSuite(suite); \
-		} \
-	}; \
-	static suite##_adder suite##_adderInstance
+#define TEST_SUITE_DEFINE(suite)                                                                                                       \
+    Chimer::TestFramework::TestSuite suite(#suite, std::make_shared<Chimer::Logging::ConsoleLogger>(Chimer::Logging::LogLevel::Info)); \
+    class suite##_adder                                                                                                                \
+    {                                                                                                                                  \
+    public:                                                                                                                            \
+        suite##_adder()                                                                                                                \
+        {                                                                                                                              \
+            Chimer::TestFramework::GetDriver().AddTestSuite(suite);                                                                    \
+        }                                                                                                                              \
+    };                                                                                                                                 \
+    static suite##_adder suite##_adderInstance

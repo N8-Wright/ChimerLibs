@@ -2,18 +2,18 @@
 
 namespace Chimer::Logging
 {
-	Logger::Logger(LogLevel logLevel)
-		: m_logLevel(logLevel)
-	{
-	}
+    Logger::Logger(LogLevel logLevel) :
+        m_logLevel(logLevel)
+    {
+    }
 
-	LogLevel Logger::GetLogLevel() const noexcept
-	{
-		return m_logLevel;
-	}
+    LogLevel Logger::GetLogLevel() const noexcept
+    {
+        return m_logLevel;
+    }
 
-	bool Logger::ConfiguredToLog(LogLevel logLevel) const noexcept
-	{
-		return m_logLevel >= logLevel;
-	}
+    bool Logger::ConfiguredToLog(LogLevel logLevel) const noexcept
+    {
+        return m_logLevel >= logLevel;
+    }
 }

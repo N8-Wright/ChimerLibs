@@ -2,5 +2,5 @@
 
 int main(int argc, const char** argv)
 {
-	return Chimer::TestFramework::RunAllTests(argc, argv);
+    return Chimer::TestFramework::RunAllTests(argc, argv);
 }
