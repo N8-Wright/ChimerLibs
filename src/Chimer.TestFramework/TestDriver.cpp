@@ -1,8 +1,9 @@
 #include "Chimer.Logging/LoggerDelegate.hpp"
 #include "Chimer.Logging/ConsoleLogger.hpp"
 
-#include "TestDriver.hpp"
-#include "TestSuite.hpp"
+#include "Chimer.TestFramework/TestDriver.hpp"
+#include "Chimer.TestFramework/TestSuite.hpp"
+
 #include <sstream>
 
 using namespace Chimer::Logging;

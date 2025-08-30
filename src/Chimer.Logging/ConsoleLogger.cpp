@@ -1,4 +1,4 @@
-#include "ConsoleLogger.hpp"
+#include "Chimer.Logging/ConsoleLogger.hpp"
 
 #include <iostream>
 #include <chrono>
