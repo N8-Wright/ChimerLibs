@@ -19,12 +19,12 @@ static auto logTestResults = MakeLoggerDelegate(
 
 namespace Chimer::TestFramework
 {
-    TestDriver::TestDriver(std::shared_ptr<Logging::Logger> logger) :
+    TestDriver::TestDriver(gsl::not_null<std::shared_ptr<Logging::Logger>> logger) :
         m_logger(std::move(logger))
     {
     }
 
-    void TestDriver::AddTestSuite(TestSuite& suite)
+    void TestDriver::AddTestSuite(gsl::not_null<TestSuite*> suite)
     {
         m_suites.push_back(suite);
     }
@@ -36,7 +36,7 @@ namespace Chimer::TestFramework
         size_t testsFailed = 0;
         for (auto& suite : m_suites)
         {
-            const auto result = suite.get().Run();
+            const auto result = suite->Run();
             testsPassed += result.TestsPassed;
             testsFailed += result.TestsFailed;
         }

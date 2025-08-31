@@ -15,3 +15,4 @@ include(cmake/InterproceduralOptimization.cmake)
 include(cmake/StaticLinkSTL.cmake)
 
 add_subdirectory(src)
+add_subdirectory(vendor)

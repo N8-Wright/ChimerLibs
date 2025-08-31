@@ -7,6 +7,9 @@
 
 #include <vector>
 #include <memory>
+
+#include <gsl/gsl>
+
 namespace Chimer::TestFramework
 {
     class Test;
@@ -17,7 +20,7 @@ namespace Chimer::TestFramework
         std::shared_ptr<Logging::Logger> m_logger;
 
     public:
-        TestSuite(std::string_view name, std::shared_ptr<Logging::Logger> logger);
+        TestSuite(std::string_view name, gsl::not_null<std::shared_ptr<Logging::Logger>> logger);
         void AddTest(std::unique_ptr<Test> test);
         TestSuiteResult Run();
     };
@@ -33,7 +36,7 @@ namespace Chimer::TestFramework
     public:                                                                                                                            \
         suite##_adder()                                                                                                                \
         {                                                                                                                              \
-            Chimer::TestFramework::GetDriver().AddTestSuite(suite);                                                                    \
+            Chimer::TestFramework::GetDriver().AddTestSuite(&suite);                                                                    \
         }                                                                                                                              \
     };                                                                                                                                 \
     static suite##_adder suite##_adderInstance

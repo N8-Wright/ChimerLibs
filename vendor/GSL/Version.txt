@@ -1,0 +1,1 @@
+https://github.com/microsoft/GSL/releases/tag/v4.2.0

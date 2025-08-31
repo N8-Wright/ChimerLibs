@@ -10,7 +10,7 @@ using namespace Chimer::Logging;
 
 namespace Chimer::TestFramework
 {
-    TestSuite::TestSuite(std::string_view name, std::shared_ptr<Logging::Logger> logger) :
+    TestSuite::TestSuite(std::string_view name, gsl::not_null<std::shared_ptr<Logging::Logger>> logger) :
         m_name(name), m_logger(std::move(logger))
     {
     }
@@ -32,8 +32,6 @@ namespace Chimer::TestFramework
     TestSuiteResult TestSuite::Run()
     {
         TestSuiteResult suiteResult{};
-        int testsFailed = 0;
-        int testsPassed = 0;
         for (auto& test : m_tests)
         {
             test->Run();
@@ -51,7 +49,6 @@ namespace Chimer::TestFramework
             }
         }
 
-        LogMessages::TestSuiteRunInfo(m_logger, m_name, testsPassed, testsFailed);
         return suiteResult;
     }
 }
