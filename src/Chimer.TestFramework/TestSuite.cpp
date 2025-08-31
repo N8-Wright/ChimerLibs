@@ -10,8 +10,8 @@ using namespace Chimer::Logging;
 
 namespace Chimer::TestFramework
 {
-    TestSuite::TestSuite(std::string_view name, gsl::not_null<std::shared_ptr<Logging::Logger>> logger) :
-        m_name(name), m_logger(std::move(logger))
+    TestSuite::TestSuite(const std::string_view name, const gsl::not_null<std::shared_ptr<Logging::Logger>>& logger) :
+        m_name(name), m_logger(logger)
     {
     }
 

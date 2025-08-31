@@ -4,6 +4,7 @@ add_executable(Chimer.TestFramework.Tests
   FalseTests.cpp
   GreaterThanTests.cpp
   LessThanTests.cpp
+  TrueTests.cpp
   Main.cpp
 )
 

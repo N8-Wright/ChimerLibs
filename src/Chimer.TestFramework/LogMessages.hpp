@@ -14,7 +14,7 @@ namespace Chimer::TestFramework
     public:
         static inline auto TestFailure = Logging::MakeLoggerDelegate(
             Logging::LogLevel::Error,
-            [](std::string_view testClass, const TestFailureResult& failure) static {
+            [](const std::string_view testClass, const TestFailureResult& failure) static {
                 std::stringstream os;
                 os << "Failed test '" << testClass << "::" << failure.TestName << "' because " << failure.Reason << ": "
                    << failure.Location.file_name() << '('
@@ -26,7 +26,7 @@ namespace Chimer::TestFramework
 
         static inline auto TestSuccess = MakeLoggerDelegate(
             Logging::LogLevel::Info,
-            [](std::string_view testClass, std::string_view testName) static {
+            [](const std::string_view testClass, const std::string_view testName) static {
                 std::stringstream os;
                 os << "Passed test '" << testClass << "::" << testName << "'";
                 return os.str();
@@ -34,7 +34,7 @@ namespace Chimer::TestFramework
 
         static inline auto TestSuiteRunInfo = MakeLoggerDelegate(
             Logging::LogLevel::Info,
-            [](std::string_view suite, const TestSuiteResult& result) static {
+            [](const std::string_view suite, const TestSuiteResult& result) static {
                 std::stringstream os;
                 os << "Finished running all tests in " << suite << ". "
                    << "Tests Passed: " << result.Passed << ". "

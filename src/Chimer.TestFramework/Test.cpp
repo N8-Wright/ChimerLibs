@@ -3,12 +3,12 @@
 
 namespace Chimer::TestFramework
 {
-    Test::Test(std::string_view testName) :
+    Test::Test(const std::string_view testName) :
         m_testName(testName), m_failed(false)
     {
     }
 
-    void Test::MarkFailed(std::string reason, const std::source_location location)
+    void Test::MarkFailed(std::string reason, const std::source_location& location)
     {
         m_failed = true;
         m_failedReason = std::move(reason);

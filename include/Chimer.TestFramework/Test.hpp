@@ -1,20 +1,15 @@
 #pragma once
+#include "Chimer.Core/Concepts.hpp"
+
 #include "Chimer.TestFramework/TestSuite.hpp"
 #include "Chimer.TestFramework/TestFailureResult.hpp"
 
 #include <string>
 #include <string_view>
-#include <optional>
 #include <sstream>
 #include <type_traits>
-#include <concepts>
 #include <cstring>
 #include <source_location>
-
-template<typename T>
-concept Streamable = requires(std::ostream& os, T value) {
-    { os << value } -> std::same_as<std::ostream&>;
-};
 
 namespace Chimer::TestFramework
 {
@@ -42,14 +37,14 @@ namespace Chimer::TestFramework
         std::source_location m_failedLocation;
 
     public:
-        Test(std::string_view testName);
+        explicit Test(std::string_view testName);
         virtual ~Test() = default;
-        bool Failed() const noexcept;
-        void MarkFailed(std::string reason, const std::source_location location);
+        [[nodiscard]] bool Failed() const noexcept;
+        void MarkFailed(std::string reason, const std::source_location& location);
 
-        std::string_view Reason() const noexcept;
-        std::string_view TestName() const noexcept;
-        TestFailureResult GetFailureResult() const;
+        [[nodiscard]] std::string_view Reason() const noexcept;
+        [[nodiscard]] std::string_view TestName() const noexcept;
+        [[nodiscard]] TestFailureResult GetFailureResult() const;
 
         virtual void Run() = 0;
 
@@ -93,6 +88,7 @@ namespace Chimer::TestFramework
             else
             {
                 static_assert(false, "Cannot compare these types");
+                return false;
             }
         }
 
@@ -136,6 +132,7 @@ namespace Chimer::TestFramework
             else
             {
                 static_assert(false, "Cannot compare these types");
+                return false;
             }
         }
 
@@ -159,6 +156,7 @@ namespace Chimer::TestFramework
             else
             {
                 static_assert(false, "Cannot compare these types");
+                return false;
             }
         }
 
@@ -182,6 +180,7 @@ namespace Chimer::TestFramework
             else
             {
                 static_assert(false, "Cannot compare these types");
+                return false;
             }
         }
     };

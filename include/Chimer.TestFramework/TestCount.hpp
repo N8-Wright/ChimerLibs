@@ -12,6 +12,6 @@ namespace Chimer::TestFramework
         TestCount& operator++();
         void operator+=(TestCount other);
         friend std::ostream& operator<<(std::ostream& os, const TestCount& count);
-        size_t Count() const noexcept;
+        [[nodiscard]] size_t Count() const noexcept;
     };
 }

@@ -10,7 +10,7 @@ namespace Chimer::TestFramework
         return *this;
     }
 
-    void TestCount::operator+=(TestCount other)
+    void TestCount::operator+=(const TestCount other)
     {
         m_count += other.m_count;
     }

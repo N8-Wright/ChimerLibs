@@ -2,7 +2,7 @@
 
 namespace Chimer::Logging
 {
-    Logger::Logger(LogLevel logLevel) :
+    Logger::Logger(const LogLevel logLevel) :
         m_logLevel(logLevel)
     {
     }
@@ -12,7 +12,7 @@ namespace Chimer::Logging
         return m_logLevel;
     }
 
-    bool Logger::ConfiguredToLog(LogLevel logLevel) const noexcept
+    bool Logger::ConfiguredToLog(const LogLevel logLevel) const noexcept
     {
         return m_logLevel >= logLevel;
     }

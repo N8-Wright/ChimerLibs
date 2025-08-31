@@ -12,24 +12,24 @@ namespace Chimer::TestFramework
 {
     static auto logTestResults = MakeLoggerDelegate(
         LogLevel::Info,
-        [](TestCount testsPassed, TestCount testsFailed) {
+        [](const TestCount testsPassed, const TestCount testsFailed) {
             std::stringstream os;
             os << "Total tests passed: " << testsPassed << ". "
                << "Total tests failed: " << testsFailed << ".";
             return os.str();
         });
 
-    TestDriver::TestDriver(gsl::not_null<std::shared_ptr<Logging::Logger>> logger) :
-        m_logger(std::move(logger))
+    TestDriver::TestDriver(const gsl::not_null<std::shared_ptr<Logging::Logger>>& logger) :
+        m_logger(logger)
     {
     }
 
-    void TestDriver::AddTestSuite(gsl::not_null<TestSuite*> suite)
+    void TestDriver::AddTestSuite(const gsl::not_null<TestSuite*> suite)
     {
         m_suites.push_back(suite);
     }
 
-    int TestDriver::Run(int, const char**)
+    int TestDriver::Run(int, const char**) const
     {
         std::vector<TestSuiteResult> results;
         TestCount passed;
@@ -51,7 +51,7 @@ namespace Chimer::TestFramework
         return testDriver;
     }
 
-    int RunAllTests(int argc, const char** argv)
+    int RunAllTests(const int argc, const char** argv)
     {
         return GetDriver().Run(argc, argv);
     }

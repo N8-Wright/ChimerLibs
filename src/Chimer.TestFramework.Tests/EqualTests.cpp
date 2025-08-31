@@ -1,7 +1,5 @@
 #include "Chimer.TestFramework/Test.hpp"
 
-#include <compare>
-
 TEST_SUITE_DEFINE(EqualTests);
 
 TEST(EqualTests, Integers)
@@ -44,8 +42,8 @@ TEST(EqualTests, CharPointers)
 
 TEST(EqualTests, CharArrays)
 {
-    const char lhs[] = "baz";
-    const char rhs[] = "baz";
+    constexpr char lhs[] = "baz";
+    constexpr char rhs[] = "baz";
 
     ASSERT_EQ(lhs, rhs);
 }

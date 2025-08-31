@@ -20,7 +20,7 @@ namespace Chimer::TestFramework
         std::shared_ptr<Logging::Logger> m_logger;
 
     public:
-        TestSuite(std::string_view name, gsl::not_null<std::shared_ptr<Logging::Logger>> logger);
+        TestSuite(std::string_view name, const gsl::not_null<std::shared_ptr<Logging::Logger>>& logger);
         void AddTest(std::unique_ptr<Test> test);
         TestSuiteResult Run();
     };

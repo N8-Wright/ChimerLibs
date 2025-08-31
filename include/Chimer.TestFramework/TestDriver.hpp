@@ -15,9 +15,9 @@ namespace Chimer::TestFramework
         std::shared_ptr<Logging::Logger> m_logger;
 
     public:
-        explicit TestDriver(gsl::not_null<std::shared_ptr<Logging::Logger>> logger);
+        explicit TestDriver(const gsl::not_null<std::shared_ptr<Logging::Logger>>& logger);
         void AddTestSuite(gsl::not_null<TestSuite*> suite);
-        int Run(int argc, const char** argv);
+        int Run(int argc, const char** argv) const;
     };
 
     TestDriver& GetDriver();

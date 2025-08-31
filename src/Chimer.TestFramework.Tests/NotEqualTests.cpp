@@ -42,8 +42,8 @@ TEST(NotEqualTests, CharPointers)
 
 TEST(NotEqualTests, CharArrays)
 {
-    const char lhs[] = "baz";
-    const char rhs[] = "bar";
+    constexpr char lhs[] = "baz";
+    constexpr char rhs[] = "bar";
 
     ASSERT_NOT_EQ(lhs, rhs);
 }
