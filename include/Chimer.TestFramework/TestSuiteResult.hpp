@@ -1,12 +1,13 @@
 #pragma once
 #include "Chimer.TestFramework/TestFailureResult.hpp"
+#include "Chimer.TestFramework/TestCount.hpp"
 
 namespace Chimer::TestFramework
 {
     struct TestSuiteResult
     {
-        size_t TestsPassed;
-        size_t TestsFailed;
+        TestCount Passed;
+        TestCount Failed;
         std::vector<TestFailureResult> FailedTests;
     };
 }

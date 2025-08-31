@@ -39,16 +39,17 @@ namespace Chimer::TestFramework
             {
                 auto result = test->GetFailureResult();
                 LogMessages::TestFailure(m_logger, m_name, result);
-                suiteResult.TestsFailed++;
+                ++suiteResult.Failed;
                 suiteResult.FailedTests.push_back(std::move(result));
             }
             else
             {
                 LogMessages::TestSuccess(m_logger, m_name, test->TestName());
-                suiteResult.TestsPassed++;
+                ++suiteResult.Passed;
             }
         }
 
+        LogMessages::TestSuiteRunInfo(m_logger, m_name, suiteResult);
         return suiteResult;
     }
 }

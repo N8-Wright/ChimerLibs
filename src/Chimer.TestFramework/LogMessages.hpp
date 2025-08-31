@@ -1,5 +1,6 @@
 #pragma once
 #include "Chimer.TestFramework/TestFailureResult.hpp"
+#include "Chimer.TestFramework/TestSuiteResult.hpp"
 
 #include "Chimer.Logging/LoggerDelegate.hpp"
 
@@ -33,11 +34,11 @@ namespace Chimer::TestFramework
 
         static inline auto TestSuiteRunInfo = MakeLoggerDelegate(
             Logging::LogLevel::Info,
-            [](std::string_view testSuite, int testsPassed, int testsFailed) static {
+            [](std::string_view suite, const TestSuiteResult& result) static {
                 std::stringstream os;
-                os << "Finished running all tests in " << testSuite << ". "
-                   << "Tests Passed: " << testsPassed << ". "
-                   << "Tests Failed: " << testsFailed << ".";
+                os << "Finished running all tests in " << suite << ". "
+                   << "Tests Passed: " << result.Passed << ". "
+                   << "Tests Failed: " << result.Failed << ".";
                 return os.str();
             });
     };
