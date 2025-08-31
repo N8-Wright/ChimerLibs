@@ -17,6 +17,11 @@ namespace Chimer::TestFramework
 
     void TestSuite::AddTest(std::unique_ptr<Test> test)
     {
+        if (test == nullptr)
+        {
+            throw std::runtime_error("Test cannot be null");
+        }
+
         static auto TestRegister = MakeLoggerDelegate(
             Logging::LogLevel::Detail,
             [](std::string_view testClass, std::string_view testName) static {
