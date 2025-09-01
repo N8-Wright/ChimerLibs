@@ -2,12 +2,14 @@ add_library(Chimer.Logging
   ConsoleLogger.cpp
   ThreadedLogger.cpp
   Logger.cpp
+  FileLogger.cpp
 
   ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/ConsoleLogger.hpp
   ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/Logger.hpp
   ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/LoggerDelegate.hpp
   ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/LogLevel.hpp
   ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/ThreadedLogger.hpp
+  ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/FileLogger.hpp
 )
 
 set_project_warnings(Chimer.Logging)
