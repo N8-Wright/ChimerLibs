@@ -14,7 +14,7 @@ namespace Chimer::Logging
     void ThreadedLogger::Log(LogLevel logLevel, std::string_view message)
     {
         std::unique_lock lock(m_logMutex);
-        m_toLog.emplace(logLevel, message);
+        m_toLog.emplace_back(logLevel, message, std::chrono::system_clock::now());
         m_notifyLogThread.notify_one();
     }
 
@@ -31,42 +31,25 @@ namespace Chimer::Logging
         {
             try
             {
-                std::unique_lock lock(m_logMutex);
-                m_notifyLogThread.wait(lock, [this, &token] {
-                    return token.stop_requested() || !m_toLog.empty();
-                });
-
-                if (token.stop_requested() && m_toLog.empty())
+                std::vector<LogMessage> batch;
                 {
-                    break;
+                    std::unique_lock lock(m_logMutex);
+                    m_notifyLogThread.wait(lock, [this, &token] {
+                        return token.stop_requested() || !m_toLog.empty();
+                    });
+
+                    if (token.stop_requested() && m_toLog.empty())
+                    {
+                        break;
+                    }
+
+                    std::swap(batch, m_toLog);
                 }
 
-                auto front = std::move(m_toLog.front());
-                m_toLog.pop();
-                lock.unlock();
-
-                LogInternal(front.Level, front.Message);
-            }
-            catch (const std::exception& e)
-            {
-                std::cerr << e.what();
-            }
-            catch (...)
-            {
-                std::cerr << "Unknown exception";
-            }
-        }
-
-        // Drain logs
-        std::unique_lock lock(m_logMutex);
-        while (!m_toLog.empty())
-        {
-            auto front = std::move(m_toLog.front());
-            m_toLog.pop();
-
-            try
-            {
-                LogInternal(front.Level, front.Message);
+                for (const auto& entry : batch)
+                {
+                    LogInternal(entry.Level, entry.Timestamp, entry.Message);
+                }
             }
             catch (const std::exception& e)
             {

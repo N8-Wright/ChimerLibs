@@ -15,10 +15,11 @@ namespace Chimer::Logging
         ShutdownLogProcessing();
     }
 
-    void ConsoleLogger::LogInternal(const LogLevel logLevel, const std::string_view message)
+    void ConsoleLogger::LogInternal(const LogLevel logLevel,
+                                    const std::chrono::time_point<std::chrono::system_clock> timestamp,
+                                    const std::string_view message)
     {
-        const auto now = std::chrono::system_clock::now();
-        const std::time_t time = std::chrono::system_clock::to_time_t(now);
+        const std::time_t time = std::chrono::system_clock::to_time_t(timestamp);
         std::cout << std::put_time(std::localtime(&time), "%Y-%m-%d %H:%M:%S") << " [" << logLevel << "] - " << message << "\n";
     }
 }

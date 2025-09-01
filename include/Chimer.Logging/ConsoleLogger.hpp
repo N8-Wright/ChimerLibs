@@ -13,7 +13,10 @@ namespace Chimer::Logging
         ConsoleLogger& operator=(const ConsoleLogger&) = delete;
         ConsoleLogger(ConsoleLogger&&) = delete;
         ConsoleLogger& operator=(ConsoleLogger&&) = delete;
+
     protected:
-        void LogInternal(LogLevel logLevel, std::string_view message) override;
+        void LogInternal(LogLevel logLevel,
+                         std::chrono::time_point<std::chrono::system_clock> timestamp,
+                         std::string_view message) override;
     };
 }
