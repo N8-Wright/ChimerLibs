@@ -2,7 +2,7 @@
 
 #include "LogLevel.hpp"
 
-#include <string_view>
+#include <string>
 
 namespace Chimer::Logging
 {
@@ -16,6 +16,6 @@ namespace Chimer::Logging
         [[nodiscard]] LogLevel GetLogLevel() const noexcept;
         [[nodiscard]] bool ConfiguredToLog(LogLevel logLevel) const noexcept;
 
-        virtual void Log(LogLevel logLevel, std::string_view message) = 0;
+        virtual void Log(LogLevel logLevel, std::string&& message) = 0;
     };
 }

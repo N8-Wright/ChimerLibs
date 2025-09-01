@@ -14,9 +14,9 @@ namespace Chimer::Logging
         struct LogMessage
         {
             LogMessage(const LogLevel level,
-                const std::string_view message,
+                std::string&& message,
                 const std::chrono::time_point<std::chrono::system_clock> timestamp)
-                : Level(level), Message(message), Timestamp(timestamp)
+                : Level(level), Message(std::move(message)), Timestamp(timestamp)
             {
             }
 
@@ -32,7 +32,7 @@ namespace Chimer::Logging
 
     public:
         explicit ThreadedLogger(LogLevel logLevel);
-        void Log(LogLevel logLevel, std::string_view message) override;
+        void Log(LogLevel logLevel, std::string&& message) override;
     protected:
         void ShutdownLogProcessing();
         virtual void LogInternal(LogLevel logLevel,

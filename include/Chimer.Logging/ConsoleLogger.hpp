@@ -9,7 +9,7 @@ namespace Chimer::Logging
     public:
         explicit ConsoleLogger(LogLevel logLevel);
         ~ConsoleLogger() override;
-        ConsoleLogger(const ThreadedLogger&) = delete;
+        explicit ConsoleLogger(const ThreadedLogger&) = delete;
         ConsoleLogger& operator=(const ConsoleLogger&) = delete;
         ConsoleLogger(ConsoleLogger&&) = delete;
         ConsoleLogger& operator=(ConsoleLogger&&) = delete;

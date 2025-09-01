@@ -11,10 +11,10 @@ namespace Chimer::Logging
         });
     }
 
-    void ThreadedLogger::Log(LogLevel logLevel, std::string_view message)
+    void ThreadedLogger::Log(LogLevel logLevel, std::string&& message)
     {
         std::unique_lock lock(m_logMutex);
-        m_toLog.emplace_back(logLevel, message, std::chrono::system_clock::now());
+        m_toLog.emplace_back(logLevel, std::move(message), std::chrono::system_clock::now());
         m_notifyLogThread.notify_one();
     }
 
