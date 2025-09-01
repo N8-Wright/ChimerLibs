@@ -3,6 +3,7 @@ add_library(Chimer.Logging
   ThreadedLogger.cpp
   Logger.cpp
   FileLogger.cpp
+  CompositeLogger.cpp
 
   ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/ConsoleLogger.hpp
   ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/Logger.hpp
@@ -10,6 +11,7 @@ add_library(Chimer.Logging
   ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/LogLevel.hpp
   ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/ThreadedLogger.hpp
   ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/FileLogger.hpp
+  ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/CompositeLogger.hpp
 )
 
 set_project_warnings(Chimer.Logging)

@@ -8,6 +8,7 @@ namespace Chimer::Logging
 {
     class Logger
     {
+    protected:
         LogLevel m_logLevel;
 
     public:
