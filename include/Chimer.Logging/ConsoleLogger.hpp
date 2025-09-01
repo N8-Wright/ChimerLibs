@@ -1,13 +1,19 @@
 #pragma once
 
-#include "Logger.hpp"
+#include "Chimer.Logging/ThreadedLogger.hpp"
 
 namespace Chimer::Logging
 {
-    class ConsoleLogger : public Logger
+    class ConsoleLogger final : public ThreadedLogger
     {
     public:
-        ConsoleLogger(LogLevel logLevel);
-        void Log(LogLevel logLevel, std::string_view message) const override;
+        explicit ConsoleLogger(LogLevel logLevel);
+        ~ConsoleLogger() override;
+        ConsoleLogger(const ThreadedLogger&) = delete;
+        ConsoleLogger& operator=(const ConsoleLogger&) = delete;
+        ConsoleLogger(ConsoleLogger&&) = delete;
+        ConsoleLogger& operator=(ConsoleLogger&&) = delete;
+    protected:
+        void LogInternal(LogLevel logLevel, std::string_view message) override;
     };
 }

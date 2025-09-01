@@ -4,6 +4,7 @@ add_library(Chimer.TestFramework
   TestSuite.cpp
   TestCount.cpp
   LogMessages.hpp
+  TestLogger.cpp
 
   ${PROJECT_SOURCE_DIR}/include/Chimer.TestFramework/Test.hpp
   ${PROJECT_SOURCE_DIR}/include/Chimer.TestFramework/TestDriver.hpp
@@ -11,6 +12,7 @@ add_library(Chimer.TestFramework
   ${PROJECT_SOURCE_DIR}/include/Chimer.TestFramework/TestSuite.hpp
   ${PROJECT_SOURCE_DIR}/include/Chimer.TestFramework/TestSuiteResult.hpp
   ${PROJECT_SOURCE_DIR}/include/Chimer.TestFramework/TestCount.hpp
+  ${PROJECT_SOURCE_DIR}/include/Chimer.TestFramework/TestLogger.hpp
 )
 
 set_project_warnings(Chimer.TestFramework)

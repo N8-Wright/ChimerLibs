@@ -3,6 +3,7 @@
 
 #include "Chimer.TestFramework/TestDriver.hpp"
 #include "Chimer.TestFramework/TestSuite.hpp"
+#include "Chimer.TestFramework/TestLogger.hpp"
 
 #include "LogMessages.hpp"
 #include <sstream>
@@ -19,7 +20,7 @@ namespace Chimer::TestFramework
             return os.str();
         });
 
-    TestDriver::TestDriver(const gsl::not_null<std::shared_ptr<Logging::Logger>>& logger) :
+    TestDriver::TestDriver(const gsl::not_null<Logging::Logger*> logger) :
         m_logger(logger)
     {
     }
@@ -29,7 +30,7 @@ namespace Chimer::TestFramework
         m_suites.push_back(suite);
     }
 
-    int TestDriver::Run(int, const char**) const
+    int TestDriver::Run(int, const char**)
     {
         std::vector<TestSuiteResult> results;
         TestCount passed;
@@ -47,7 +48,7 @@ namespace Chimer::TestFramework
 
     TestDriver& GetDriver()
     {
-        static TestDriver testDriver(std::make_shared<ConsoleLogger>(LogLevel::Info));
+        static TestDriver testDriver(&GetLogger());
         return testDriver;
     }
 

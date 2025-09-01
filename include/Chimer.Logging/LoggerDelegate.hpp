@@ -6,6 +6,8 @@
 #include <string>
 #include <string_view>
 
+#include <gsl/gsl>
+
 namespace Chimer::Logging
 {
     template<typename T>
@@ -40,13 +42,13 @@ namespace Chimer::Logging
     class LoggerDelegate2
     {
     public:
-        LoggerDelegate2(LogLevel logLevel, TLogLambda&& logGenerator) :
+        LoggerDelegate2(const LogLevel logLevel, TLogLambda&& logGenerator) :
             m_logLevel(logLevel), m_logGenerator(std::move(logGenerator))
         {
         }
 
         template<DerivedFromLogger TLogger, typename... TArgs>
-        inline void operator()(const TLogger& logger, TArgs&&... args) const
+        inline void operator()(TLogger& logger, TArgs&&... args) const
         {
             if (logger.ConfiguredToLog(m_logLevel))
             {
@@ -54,14 +56,20 @@ namespace Chimer::Logging
             }
         }
 
+        template<DerivedFromLogger TLogger, typename... TArgs>
+        inline void operator()(gsl::not_null<TLogger*> logger, TArgs&&... args) const
+        {
+            operator()(*logger, std::forward<TArgs>(args)...);
+        }
+
         template<DerivedFromLogger TLogger, typename... Args>
-        inline void operator()(const std::shared_ptr<TLogger>& logger, Args&&... args) const
+        inline void operator()(std::shared_ptr<TLogger>& logger, Args&&... args) const
         {
             operator()(*logger, std::forward<Args>(args)...);
         }
 
         template<DerivedFromLogger TLogger, typename... Args>
-        inline void operator()(const std::unique_ptr<TLogger>& logger, Args&&... args) const
+        inline void operator()(std::unique_ptr<TLogger>& logger, Args&&... args) const
         {
             operator()(*logger, std::forward<Args>(args)...);
         }

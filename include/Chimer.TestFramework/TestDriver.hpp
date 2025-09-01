@@ -12,12 +12,12 @@ namespace Chimer::TestFramework
     class TestDriver
     {
         std::vector<TestSuite*> m_suites;
-        std::shared_ptr<Logging::Logger> m_logger;
+         gsl::not_null<Logging::Logger*> m_logger;
 
     public:
-        explicit TestDriver(const gsl::not_null<std::shared_ptr<Logging::Logger>>& logger);
+        explicit TestDriver(gsl::not_null<Logging::Logger*> logger);
         void AddTestSuite(gsl::not_null<TestSuite*> suite);
-        int Run(int argc, const char** argv) const;
+        int Run(int argc, const char** argv);
     };
 
     TestDriver& GetDriver();

@@ -12,10 +12,10 @@ namespace Chimer::Logging
 
     public:
         virtual ~Logger() = default;
-        Logger(LogLevel logLevel);
-        LogLevel GetLogLevel() const noexcept;
-        bool ConfiguredToLog(LogLevel logLevel) const noexcept;
+        explicit Logger(LogLevel logLevel);
+        [[nodiscard]] LogLevel GetLogLevel() const noexcept;
+        [[nodiscard]] bool ConfiguredToLog(LogLevel logLevel) const noexcept;
 
-        virtual void Log(LogLevel logLevel, std::string_view message) const = 0;
+        virtual void Log(LogLevel logLevel, std::string_view message) = 0;
     };
 }
