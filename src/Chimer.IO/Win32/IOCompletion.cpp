@@ -40,7 +40,7 @@ namespace Chimer::IO
                 continue;
             }
 
-            if (const auto clientSocket = (SOCKET)completionKey; clientSocket == NULL)
+            if (const auto clientSocket = completionKey; clientSocket == NULL)
             {
                 break; // Exit thread if socket is null
             }
@@ -85,8 +85,7 @@ namespace Chimer::IO
         {
             m_workers.emplace_back([this](const auto& passedToken) {
                 IOCompletion::IOWorker(passedToken);
-            },
-                                   token);
+            }, token);
         }
 
         for (auto& worker : m_workers)
