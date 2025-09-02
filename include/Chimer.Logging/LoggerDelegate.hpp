@@ -3,9 +3,6 @@
 #include "Logger.hpp"
 
 #include <functional>
-#include <string>
-#include <string_view>
-
 #include <gsl/gsl>
 
 namespace Chimer::Logging

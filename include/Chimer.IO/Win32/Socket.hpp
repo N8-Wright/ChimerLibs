@@ -28,5 +28,7 @@ namespace Chimer::IO
         void Bind(const sockaddr_in& addr) const;
         void Listen() const;
         void Accept(const Socket& accept, Events::OnIOCompletion onCompletion) const;
+
+        friend class IOCompletion;
     };
 }
