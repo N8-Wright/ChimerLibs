@@ -2,9 +2,11 @@
 
 #include "Chimer.IO/Win32/OverlappedData.hpp"
 
-#include <winsock2.h>
 #include <span>
 #include <system_error>
+#include <string_view>
+#include <optional>
+#include <cstdint>
 
 namespace Chimer::IO
 {
@@ -26,7 +28,7 @@ namespace Chimer::IO
 
         void Write(std::span<char> buffer, Events::OnIOCompletion onCompletion) const;
         void Read(std::span<char> buffer, Events::OnIOCompletion onCompletion) const;
-        void Bind(const sockaddr_in& addr) const;
+        void Bind(const std::optional<std::string_view>& address, std::string_view port, int family, int type) const;
         void Listen() const;
         void Accept(const Socket& accept, Events::OnAcceptCompletion onCompletion) const;
 

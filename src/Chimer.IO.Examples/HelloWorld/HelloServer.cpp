@@ -64,7 +64,7 @@ int main(const int, const char**)
         addr.sin_port = htons(9000);
         addr.sin_addr.s_addr = INADDR_ANY;
 
-        listener.Bind(addr);
+        listener.Bind(std::nullopt, "9000", AF_INET, SOCK_STREAM);
         listener.Listen();
 
         auto client = Socket::CreateTcpSocket();

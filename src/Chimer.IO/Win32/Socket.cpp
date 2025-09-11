@@ -5,6 +5,7 @@
 
 #include <system_error>
 #include <mswsock.h>
+#include <ws2tcpip.h>
 namespace Chimer::IO
 {
     Socket Socket::CreateTcpSocket()
@@ -93,13 +94,35 @@ namespace Chimer::IO
         }
     }
 
-    void Socket::Bind(const sockaddr_in& addr) const
+    void Socket::Bind(const std::optional<std::string_view>& address, const std::string_view port, const int family, const int type) const
     {
-        if (SOCKET_ERROR == bind(m_socketHandle, reinterpret_cast<const sockaddr*>(&addr), sizeof(sockaddr_in)))
+        addrinfo hints{};
+        hints.ai_family = family;
+        hints.ai_socktype = type;
+        hints.ai_flags = AI_PASSIVE;
+
+        const char* rawAddress = nullptr;
+        if (address)
         {
+            rawAddress = address->data();
+        }
+
+        addrinfo* servInfo;
+        if (const auto status = getaddrinfo(rawAddress, port.data(), &hints, &servInfo); status != 0)
+        {
+            const auto err = gai_strerror(status);
+            const std::error_code ec(status, std::system_category());
+            throw std::system_error(ec, err);
+        }
+
+        if (SOCKET_ERROR == bind(m_socketHandle, servInfo->ai_addr, static_cast<int>(servInfo->ai_addrlen)))
+        {
+            freeaddrinfo(servInfo);
             const std::error_code ec(WSAGetLastError(), std::system_category());
             throw std::system_error(ec, "Failed to bind on socket");
         }
+
+        freeaddrinfo(servInfo);
     }
 
     void Socket::Listen() const
