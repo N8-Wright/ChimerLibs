@@ -2,6 +2,7 @@ add_library(Chimer.IO
   ${PROJECT_SOURCE_DIR}/include/Chimer.IO/Socket.hpp
   ${PROJECT_SOURCE_DIR}/include/Chimer.IO/Events.hpp
   ${PROJECT_SOURCE_DIR}/include/Chimer.IO/IOCompletion.hpp
+  ${PROJECT_SOURCE_DIR}/include/Chimer.IO/IOContext.hpp
 )
 
 if (WIN32)
@@ -10,11 +11,14 @@ if (WIN32)
     Win32/IOCompletion.cpp
     Win32/Win32Helpers.cpp
     Win32/Win32Helpers.hpp
+    Win32/IOContext.cpp
 
     ${PROJECT_SOURCE_DIR}/include/Chimer.IO/Win32/OverlappedData.hpp
     ${PROJECT_SOURCE_DIR}/include/Chimer.IO/Win32/Socket.hpp
     ${PROJECT_SOURCE_DIR}/include/Chimer.IO/Win32/IOCompletion.hpp
   )
+
+  target_link_libraries(Chimer.IO PUBLIC Ws2_32)
 endif()
 
 

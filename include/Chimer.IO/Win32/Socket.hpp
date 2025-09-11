@@ -16,6 +16,7 @@ namespace Chimer::IO
 
     public:
         static Socket CreateTcpSocket();
+        Socket() = default;
         Socket(int family, int type, int protocol);
         ~Socket();
         Socket(const Socket& other) = delete;
@@ -27,7 +28,7 @@ namespace Chimer::IO
         void Read(std::span<char> buffer, Events::OnIOCompletion onCompletion) const;
         void Bind(const sockaddr_in& addr) const;
         void Listen() const;
-        void Accept(const Socket& accept, Events::OnIOCompletion onCompletion) const;
+        void Accept(const Socket& accept, Events::OnAcceptCompletion onCompletion) const;
 
         friend class IOCompletion;
     };

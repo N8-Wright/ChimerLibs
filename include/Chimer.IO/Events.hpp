@@ -6,5 +6,6 @@ namespace Chimer::IO
     struct Events
     {
         using OnIOCompletion = std::function<void(size_t bytesTransferred)>;
+        using OnAcceptCompletion = std::function<void()>;
     };
 }

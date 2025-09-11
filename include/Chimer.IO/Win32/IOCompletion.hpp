@@ -20,6 +20,6 @@ namespace Chimer::IO
     public:
         explicit IOCompletion(std::shared_ptr<Logging::Logger> logger);
         void Run(const std::stop_token& token);
-        void Add(const Socket& socket);
+        void Add(const Socket& socket) const;
     };
 }

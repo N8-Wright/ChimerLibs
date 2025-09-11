@@ -1,14 +1,15 @@
 #include "Chimer.IO/Win32/Socket.hpp"
+
+#include "Win32Helpers.hpp"
 #include "Chimer.IO/Win32/OverlappedData.hpp"
 
 #include <system_error>
 #include <mswsock.h>
-
 namespace Chimer::IO
 {
     Socket Socket::CreateTcpSocket()
     {
-        return Socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+        return { AF_INET, SOCK_STREAM, IPPROTO_TCP };
     }
 
     Socket::Socket(const SOCKET socketHandle) :
@@ -18,10 +19,10 @@ namespace Chimer::IO
 
     Socket::Socket(const int family, const int type, const int protocol)
     {
-        m_socketHandle = socket(family, type, protocol);
+        m_socketHandle = WSASocketW(family, type, protocol, nullptr, 0, WSA_FLAG_OVERLAPPED);
         if (m_socketHandle == INVALID_SOCKET)
         {
-            const std::error_code ec(GetLastError(), std::system_category());
+            const std::error_code ec(WSAGetLastError(), std::system_category());
             throw std::system_error(ec, "Failed to create socket");
         }
     }
@@ -94,7 +95,7 @@ namespace Chimer::IO
 
     void Socket::Bind(const sockaddr_in& addr) const
     {
-        if (SOCKET_ERROR == bind(m_socketHandle, reinterpret_cast<const sockaddr*>(&addr), sizeof(addr)))
+        if (SOCKET_ERROR == bind(m_socketHandle, reinterpret_cast<const sockaddr*>(&addr), sizeof(sockaddr_in)))
         {
             const std::error_code ec(WSAGetLastError(), std::system_category());
             throw std::system_error(ec, "Failed to bind on socket");
@@ -103,14 +104,14 @@ namespace Chimer::IO
 
     void Socket::Listen() const
     {
-        if (SOCKET_ERROR == listen(m_socketHandle, SOMAXCONN))
+        if (SOCKET_ERROR == listen(m_socketHandle, 200))
         {
             const std::error_code ec(WSAGetLastError(), std::system_category());
             throw std::system_error(ec, "Failed to listen on socket");
         }
     }
 
-    void Socket::Accept(const Socket& accept, Events::OnIOCompletion onCompletion) const
+    void Socket::Accept(const Socket& accept, Events::OnAcceptCompletion onCompletion) const
     {
         GUID guid = WSAID_ACCEPTEX;
         LPFN_ACCEPTEX acceptEx;
@@ -130,16 +131,20 @@ namespace Chimer::IO
             throw std::runtime_error("WSAIoctl failed to get AcceptEx");
         }
 
-        char buffer[(sizeof(sockaddr_storage)) * 2 + 32];
         DWORD bytesReceived;
-        if (OVERLAPPED* data = new OverlappedData(std::move(onCompletion)); !acceptEx(m_socketHandle,
-                       accept.m_socketHandle,
-                       buffer,
-                       0,
-                       sizeof(sockaddr_storage) + 16,
-                       sizeof(sockaddr_storage) + 16,
-                       &bytesReceived,
-                       data))
+        std::vector<char> buffer;
+        buffer.resize((sizeof(sockaddr_storage) * 2) + 32);
+        const auto overlapped = new OverlappedData(std::move(onCompletion), std::move(buffer));
+        auto& [_, movedBuffer] = std::get<AcceptEvent>(overlapped->Event);
+
+        if (FALSE == acceptEx(m_socketHandle,
+                              accept.m_socketHandle,
+                              movedBuffer.data(),
+                              0,
+                              sizeof(sockaddr_storage) + 16,
+                              sizeof(sockaddr_storage) + 16,
+                              &bytesReceived,
+                              overlapped))
         {
             if (const auto err = WSAGetLastError(); err != ERROR_IO_PENDING)
             {

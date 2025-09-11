@@ -17,7 +17,7 @@ namespace Chimer::IO
         FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
                        nullptr,
                        errorCode,
-                       MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                       MAKELANGID(LANG_ENGLISH, SUBLANG_DEFAULT),
                        reinterpret_cast<LPSTR>(&messageBuffer),
                        0,
                        nullptr);

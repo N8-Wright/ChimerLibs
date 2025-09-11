@@ -47,7 +47,16 @@ namespace Chimer::IO
 
             try
             {
-                data->OnCompletion(numberOfBytesTransferred);
+                if (std::holds_alternative<ReadWriteEvent>(data->Event))
+                {
+                    const auto& [OnIOCompletion] = std::get<ReadWriteEvent>(data->Event);
+                    OnIOCompletion(numberOfBytesTransferred);
+                }
+                else if (std::holds_alternative<AcceptEvent>(data->Event))
+                {
+                    const auto& [OnAcceptCompletion, _] = std::get<AcceptEvent>(data->Event);
+                    OnAcceptCompletion();
+                }
             }
             catch (const std::exception& e)
             {
@@ -94,8 +103,13 @@ namespace Chimer::IO
         }
     }
 
-    void IOCompletion::Add(const Socket& socket)
+    void IOCompletion::Add(const Socket& socket) const
     {
+        if (socket.m_socketHandle == INVALID_SOCKET)
+        {
+            return;
+        }
+
         if (nullptr == CreateIoCompletionPort(reinterpret_cast<HANDLE>(socket.m_socketHandle),
                                               m_ioCompletionPort,
                                               reinterpret_cast<ULONG_PTR>(this),
