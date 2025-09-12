@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Chimer.IO/Win32/OverlappedData.hpp"
+#include "Chimer.IO/SocketType.hpp"
+#include "Chimer.IO/SocketFamily.hpp"
+#include "Chimer.IO/SocketProtocol.hpp"
 
 #include <span>
 #include <system_error>
@@ -17,9 +20,8 @@ namespace Chimer::IO
         explicit Socket(SOCKET socketHandle);
 
     public:
-        static Socket CreateTcpSocket();
         Socket() = default;
-        Socket(int family, int type, int protocol);
+        Socket(SocketFamily family, SocketType type, SocketProtocol protocol = SocketProtocol::Unspecified);
         ~Socket();
         Socket(const Socket& other) = delete;
         Socket& operator=(const Socket& other) = delete;

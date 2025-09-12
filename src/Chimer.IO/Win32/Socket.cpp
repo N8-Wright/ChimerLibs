@@ -8,19 +8,14 @@
 #include <ws2tcpip.h>
 namespace Chimer::IO
 {
-    Socket Socket::CreateTcpSocket()
-    {
-        return { AF_INET, SOCK_STREAM, IPPROTO_TCP };
-    }
-
     Socket::Socket(const SOCKET socketHandle) :
         m_socketHandle(socketHandle)
     {
     }
 
-    Socket::Socket(const int family, const int type, const int protocol)
+    Socket::Socket(SocketFamily family, SocketType type, SocketProtocol protocol)
     {
-        m_socketHandle = WSASocketW(family, type, protocol, nullptr, 0, WSA_FLAG_OVERLAPPED);
+        m_socketHandle = WSASocketW(static_cast<int>(family), static_cast<int>(type), static_cast<int>(protocol), nullptr, 0, WSA_FLAG_OVERLAPPED);
         if (m_socketHandle == INVALID_SOCKET)
         {
             const std::error_code ec(WSAGetLastError(), std::system_category());

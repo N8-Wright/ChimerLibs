@@ -56,7 +56,7 @@ int main(const int, const char**)
     {
         IOContext context;
         IOCompletion runner(logger);
-        const auto listener = Socket::CreateTcpSocket();
+        const auto listener = Socket(SocketFamily::Inet, SocketType::Stream);
         runner.Add(listener);
 
         sockaddr_in addr{};
@@ -67,13 +67,13 @@ int main(const int, const char**)
         listener.Bind(std::nullopt, "9000", AF_INET, SOCK_STREAM);
         listener.Listen();
 
-        auto client = Socket::CreateTcpSocket();
+        auto client = Socket(SocketFamily::Inet, SocketType::Stream);
         listener.Accept(client, [&]() {
             runner.Add(client);
             connections.emplace_back(std::move(client), logger);
 
             auto& connection = connections.back();
-            client = Socket::CreateTcpSocket();
+            client = Socket(SocketFamily::Inet, SocketType::Stream);
             connection.Read();
         });
 
