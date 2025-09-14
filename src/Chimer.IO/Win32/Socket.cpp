@@ -129,6 +129,27 @@ namespace Chimer::IO
         }
     }
 
+    void Socket::Connect(const std::string& address, const std::string& port, SocketType socketType) const
+    {
+        addrinfo hints{};
+        addrinfo* res = nullptr;
+
+        hints.ai_family = AF_UNSPEC;
+        hints.ai_socktype = static_cast<int>(socketType);
+
+        if (-1 == getaddrinfo(address.c_str(), port.c_str(), &hints, &res))
+        {
+            const std::error_code ec(errno, std::system_category());
+            throw std::system_error(ec, "Failed to resolve getaddrinfo");
+        }
+
+        if (SOCKET_ERROR == connect(m_socketHandle, res->ai_addr, static_cast<int>(res->ai_addrlen)))
+        {
+            const std::error_code ec(WSAGetLastError(), std::system_category());
+            throw std::system_error(ec, "Failed to connect on socket");
+        }
+    }
+
     void Socket::Accept(const Socket& accept, Events::OnAcceptCompletion onCompletion) const
     {
         GUID guid = WSAID_ACCEPTEX;

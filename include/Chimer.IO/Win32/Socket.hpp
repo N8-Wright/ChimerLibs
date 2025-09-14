@@ -32,6 +32,7 @@ namespace Chimer::IO
         void Read(std::span<char> buffer, Events::OnIOCompletion onCompletion) const;
         void Bind(const std::optional<std::string_view>& address, std::string_view port, int family, int type) const;
         void Listen() const;
+        void Connect(const std::string& address, const std::string& port, SocketType socketType) const;
         void Accept(const Socket& accept, Events::OnAcceptCompletion onCompletion) const;
 
         friend class IOCompletion;

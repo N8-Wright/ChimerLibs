@@ -7,8 +7,6 @@
 
 using namespace Chimer::IO;
 using namespace Chimer::Logging;
-std::string buffer;
-static std::stop_source stopSource;
 
 class HelloWorldConnection
 {
@@ -17,8 +15,8 @@ class HelloWorldConnection
     std::string m_buffer;
 
 public:
-    HelloWorldConnection(Socket clientSocket, std::shared_ptr<Logger> logger)
-        : m_clientSocket(std::move(clientSocket)), m_logger(std::move(logger))
+    HelloWorldConnection(Socket clientSocket, std::shared_ptr<Logger> logger) :
+        m_clientSocket(std::move(clientSocket)), m_logger(std::move(logger))
     {
         m_buffer.resize(1024);
     }
@@ -46,14 +44,38 @@ public:
     }
 };
 
+std::stop_source stopSource;
+Socket client;
+
+void AcceptConnections(const IOCompletion& runner,
+                       const Socket& listener,
+                       std::vector<HelloWorldConnection>& connections,
+                       std::shared_ptr<Logger> logger,
+                       const std::stop_token& stopToken)
+{
+    if (stopToken.stop_requested())
+    {
+        return;
+    }
+
+    client = Socket(SocketFamily::Inet, SocketType::Stream);
+    listener.Accept(client, [&, logger]() {
+        runner.Add(client);
+        connections.emplace_back(std::move(client), logger);
+
+        auto& connection = connections.back();
+        connection.Read();
+        AcceptConnections(runner, listener, connections, logger, stopToken);
+    });
+}
+
 int main(const int, const char**)
 {
-    buffer.resize(1024);
     const auto logger = std::make_shared<ConsoleLogger>(LogLevel::Info);
-    std::vector<HelloWorldConnection> connections;
 
     try
     {
+        std::vector<HelloWorldConnection> connections;
         IOContext context;
         IOCompletion runner(logger);
         const auto listener = Socket(SocketFamily::Inet, SocketType::Stream);
@@ -67,17 +89,7 @@ int main(const int, const char**)
         listener.Bind(std::nullopt, "9000", AF_INET, SOCK_STREAM);
         listener.Listen();
 
-        auto client = Socket(SocketFamily::Inet, SocketType::Stream);
-        listener.Accept(client, [&]() {
-            runner.Add(client);
-            connections.emplace_back(std::move(client), logger);
-
-            auto& connection = connections.back();
-            client = Socket(SocketFamily::Inet, SocketType::Stream);
-            connection.Read();
-        });
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        AcceptConnections(runner, listener, connections, logger, stopSource.get_token());
         runner.Run(stopSource.get_token());
     }
     catch (const std::exception& e)
