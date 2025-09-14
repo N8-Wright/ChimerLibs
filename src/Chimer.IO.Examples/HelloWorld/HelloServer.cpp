@@ -78,14 +78,9 @@ int main(const int, const char**)
         std::vector<HelloWorldConnection> connections;
         IOContext context;
         IOCompletion runner(logger);
+        
         const auto listener = Socket(SocketFamily::Inet, SocketType::Stream);
         runner.Add(listener);
-
-        sockaddr_in addr{};
-        addr.sin_family = AF_INET;
-        addr.sin_port = htons(9000);
-        addr.sin_addr.s_addr = INADDR_ANY;
-
         listener.Bind(std::nullopt, "9000", AF_INET, SOCK_STREAM);
         listener.Listen();
 
