@@ -89,11 +89,11 @@ namespace Chimer::IO
         }
     }
 
-    void Socket::Bind(const std::optional<std::string_view>& address, const std::string_view port, const int family, const int type) const
+    void Socket::Bind(const std::optional<std::string>& address, const std::string& port, SocketFamily family, SocketType type) const
     {
         addrinfo hints{};
-        hints.ai_family = family;
-        hints.ai_socktype = type;
+        hints.ai_family = static_cast<int>(family);
+        hints.ai_socktype = static_cast<int>(type);
         hints.ai_flags = AI_PASSIVE;
 
         const char* rawAddress = nullptr;

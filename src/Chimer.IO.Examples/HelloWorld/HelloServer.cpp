@@ -78,10 +78,10 @@ int main(const int, const char**)
         std::vector<HelloWorldConnection> connections;
         IOContext context;
         IOCompletion runner(logger);
-        
+
         const auto listener = Socket(SocketFamily::Inet, SocketType::Stream);
         runner.Add(listener);
-        listener.Bind(std::nullopt, "9000", AF_INET, SOCK_STREAM);
+        listener.Bind(std::nullopt, "9000", SocketFamily::Inet, SocketType::Stream);
         listener.Listen();
 
         AcceptConnections(runner, listener, connections, logger, stopSource.get_token());

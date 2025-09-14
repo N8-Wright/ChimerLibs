@@ -30,7 +30,7 @@ namespace Chimer::IO
 
         void Write(std::span<char> buffer, Events::OnIOCompletion onCompletion) const;
         void Read(std::span<char> buffer, Events::OnIOCompletion onCompletion) const;
-        void Bind(const std::optional<std::string_view>& address, std::string_view port, int family, int type) const;
+        void Bind(const std::optional<std::string>& address, const std::string& port, SocketFamily family, SocketType type) const;
         void Listen() const;
         void Connect(const std::string& address, const std::string& port, SocketType socketType) const;
         void Accept(const Socket& accept, Events::OnAcceptCompletion onCompletion) const;
