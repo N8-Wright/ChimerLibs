@@ -1,8 +1,11 @@
 add_subdirectory(Chimer.Logging)
 add_subdirectory(Chimer.TestFramework)
 add_subdirectory(Chimer.IO)
-add_subdirectory(Chimer.IO.Examples)
 add_subdirectory(Chimer.Message)
 if (${CHIMER_TESTING})
   add_subdirectory(Chimer.TestFramework.Tests)
+endif()
+
+if (${CHIMER_EXAMPLES})
+  add_subdirectory(Chimer.IO.Examples)
 endif()
