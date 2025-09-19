@@ -8,7 +8,4 @@ add_executable(Chimer.TestFramework.Tests
   Main.cpp
 )
 
-set_project_warnings(Chimer.TestFramework.Tests)
-static_link_stl(Chimer.TestFramework.Tests)
-enable_ipo(Chimer.TestFramework.Tests)
 target_link_libraries(Chimer.TestFramework.Tests Chimer::TestFramework)

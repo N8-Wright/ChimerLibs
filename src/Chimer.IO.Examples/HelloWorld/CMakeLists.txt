@@ -1,11 +1,5 @@
 add_executable(HelloWorldServer HelloServer.cpp)
-set_project_warnings(HelloWorldServer)
-static_link_stl(HelloWorldServer)
-enable_ipo(HelloWorldServer)
 target_link_libraries(HelloWorldServer Chimer::IO)
 
 add_executable(HelloWorldClient HelloClient.cpp)
-set_project_warnings(HelloWorldClient)
-static_link_stl(HelloWorldClient)
-enable_ipo(HelloWorldClient)
 target_link_libraries(HelloWorldClient Chimer::IO)

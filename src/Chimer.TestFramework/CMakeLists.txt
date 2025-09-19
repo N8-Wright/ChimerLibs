@@ -15,9 +15,6 @@ add_library(Chimer.TestFramework
   ${PROJECT_SOURCE_DIR}/include/Chimer.TestFramework/TestLogger.hpp
 )
 
-set_project_warnings(Chimer.TestFramework)
-static_link_stl(Chimer.TestFramework)
-enable_ipo(Chimer.TestFramework)
 target_link_libraries(Chimer.TestFramework PUBLIC
   Chimer::Logging
   Microsoft.GSL::GSL

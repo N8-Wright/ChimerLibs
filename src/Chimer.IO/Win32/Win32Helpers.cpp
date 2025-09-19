@@ -9,7 +9,7 @@ namespace Chimer::IO
         char* messageBuffer = nullptr;
         if (errorCode == 0)
         {
-            return { nullptr, [](char* ptr) static {}};
+            return { nullptr, [](char*) static {}};
         }
 
         //Ask Win32 to give us the string version of that message ID.

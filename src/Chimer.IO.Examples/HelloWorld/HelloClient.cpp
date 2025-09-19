@@ -25,7 +25,7 @@ int main()
 
         std::string message = "Hello, world";
         clientSocket.Write(message, [&message](size_t bytesWritten) {
-            std::cout << "Wrote " << message << std::endl;
+            std::cout << "Wrote " << message.substr(bytesWritten) << std::endl;
             stopSource.request_stop();
         });
 

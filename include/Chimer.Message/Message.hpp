@@ -43,5 +43,5 @@ namespace Chimer::Message
     void Message::Serialize(MessageBuffer& buffer, const uint32_t& val);
 
     template<>
-    int8_t Message::Deserialize<int8_t>(std::span<buffer>)
+    int8_t Message::Deserialize<int8_t>(std::span<char> buffer);
 }

@@ -4,10 +4,6 @@ add_library(Chimer.Message
   ${PROJECT_SOURCE_DIR}/include/Chimer.Message/Message.hpp
 )
 
-set_project_warnings(Chimer.Message)
-static_link_stl(Chimer.Message)
-enable_ipo(Chimer.Message)
-
 target_link_libraries(Chimer.Message PUBLIC Microsoft.GSL::GSL)
 target_include_directories(Chimer.Message ${WARNING_GUARD} PUBLIC
   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>

@@ -21,11 +21,6 @@ if (WIN32)
   target_link_libraries(Chimer.IO PUBLIC Ws2_32)
 endif()
 
-
-set_project_warnings(Chimer.IO)
-static_link_stl(Chimer.IO)
-enable_ipo(Chimer.IO)
-
 target_link_libraries(Chimer.IO PUBLIC Chimer.Logging)
 target_include_directories(Chimer.IO ${WARNING_GUARD} PUBLIC
   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
