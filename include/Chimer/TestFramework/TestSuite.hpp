@@ -1,12 +1,13 @@
 #pragma once
-#include "Chimer.TestFramework/TestSuiteResult.hpp"
-#include "Chimer.TestFramework/TestLogger.hpp"
+#include "Chimer/TestFramework/TestSuiteResult.hpp"
+#include "Chimer/TestFramework/TestLogger.hpp"
 
 #include "Chimer.Logging/Logger.hpp"
 #include "Chimer.Logging/ConsoleLogger.hpp"
 
 #include <vector>
 #include <memory>
+#include <string_view>
 
 #include <gsl/gsl>
 

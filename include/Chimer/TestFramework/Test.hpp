@@ -1,9 +1,9 @@
 #pragma once
 #include "Chimer.Core/Concepts.hpp"
 
-#include "Chimer.TestFramework/TestSuite.hpp"
-#include "Chimer.TestFramework/TestFailureResult.hpp"
-#include "Chimer.TestFramework/TestDriver.hpp"
+#include "Chimer/TestFramework/TestSuite.hpp"
+#include "Chimer/TestFramework/TestFailureResult.hpp"
+#include "Chimer/TestFramework/TestDriver.hpp"
 
 #include <string>
 #include <string_view>

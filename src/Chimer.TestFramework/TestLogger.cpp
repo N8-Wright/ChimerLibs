@@ -1,4 +1,4 @@
-#include "Chimer.TestFramework/TestLogger.hpp"
+#include "Chimer/TestFramework/TestLogger.hpp"
 
 #include "Chimer.Logging/ConsoleLogger.hpp"
 #include "Chimer.Logging/FileLogger.hpp"

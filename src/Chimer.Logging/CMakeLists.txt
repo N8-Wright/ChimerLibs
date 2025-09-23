@@ -14,7 +14,10 @@ add_library(Chimer.Logging
   ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/CompositeLogger.hpp
 )
 
-target_link_libraries(Chimer.Logging PUBLIC Microsoft.GSL::GSL)
+find_package(chimer-install-library REQUIRED)
+chimer_install_library(Chimer.Logging)
+
+target_link_libraries(Chimer.Logging INTERFACE Microsoft.GSL::GSL)
 target_include_directories(Chimer.Logging ${WARNING_GUARD} PUBLIC
   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>

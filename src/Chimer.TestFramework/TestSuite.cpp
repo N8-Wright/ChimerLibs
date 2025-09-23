@@ -1,5 +1,5 @@
-#include "Chimer.TestFramework/TestSuite.hpp"
-#include "Chimer.TestFramework/Test.hpp"
+#include "Chimer/TestFramework/TestSuite.hpp"
+#include "Chimer/TestFramework/Test.hpp"
 #include "LogMessages.hpp"
 
 #include "Chimer.Logging/LoggerDelegate.hpp"

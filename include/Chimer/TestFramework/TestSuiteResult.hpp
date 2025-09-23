@@ -1,6 +1,6 @@
 #pragma once
-#include "Chimer.TestFramework/TestFailureResult.hpp"
-#include "Chimer.TestFramework/TestCount.hpp"
+#include "Chimer/TestFramework/TestFailureResult.hpp"
+#include "Chimer/TestFramework/TestCount.hpp"
 
 #include <vector>
 namespace Chimer::TestFramework
