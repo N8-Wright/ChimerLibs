@@ -1,5 +1,5 @@
-#include "Chimer.Logging/LoggerDelegate.hpp"
-#include "Chimer.Logging/ConsoleLogger.hpp"
+#include "Chimer/Logging/LoggerDelegate.hpp"
+#include "Chimer/Logging/ConsoleLogger.hpp"
 
 #include "Chimer/TestFramework/TestDriver.hpp"
 #include "Chimer/TestFramework/TestSuite.hpp"

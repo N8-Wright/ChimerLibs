@@ -1,8 +1,8 @@
 #include "Chimer/TestFramework/TestLogger.hpp"
 
-#include "Chimer.Logging/ConsoleLogger.hpp"
-#include "Chimer.Logging/FileLogger.hpp"
-#include "Chimer.Logging/CompositeLogger.hpp"
+#include "Chimer/Logging/ConsoleLogger.hpp"
+#include "Chimer/Logging/FileLogger.hpp"
+#include "Chimer/Logging/CompositeLogger.hpp"
 
 #include <chrono>
 #include <sstream>

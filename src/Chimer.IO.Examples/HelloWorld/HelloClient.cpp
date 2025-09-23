@@ -1,7 +1,7 @@
 #include "Chimer.IO/Socket.hpp"
 #include "Chimer.IO/IOCompletion.hpp"
 #include "Chimer.IO/IOContext.hpp"
-#include "Chimer.Logging/ConsoleLogger.hpp"
+#include "Chimer/Logging/ConsoleLogger.hpp"
 
 #include <iostream>
 

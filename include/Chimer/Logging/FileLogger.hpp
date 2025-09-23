@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Chimer.Logging/ThreadedLogger.hpp"
+#include "Chimer/Logging/ThreadedLogger.hpp"
 
 #include <fstream>
 #include <filesystem>

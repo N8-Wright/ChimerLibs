@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LogLevel.hpp"
+#include "Chimer/Logging/LogLevel.hpp"
 
 #include <string>
 

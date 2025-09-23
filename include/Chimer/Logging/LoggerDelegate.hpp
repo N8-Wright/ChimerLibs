@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Logger.hpp"
+#include "Chimer/Logging/Logger.hpp"
 
 #include <functional>
 #include <gsl/gsl>

@@ -4,14 +4,20 @@ add_library(Chimer.Logging
   Logger.cpp
   FileLogger.cpp
   CompositeLogger.cpp
+)
 
-  ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/ConsoleLogger.hpp
-  ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/Logger.hpp
-  ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/LoggerDelegate.hpp
-  ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/LogLevel.hpp
-  ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/ThreadedLogger.hpp
-  ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/FileLogger.hpp
-  ${PROJECT_SOURCE_DIR}/include/Chimer.Logging/CompositeLogger.hpp
+target_sources(Chimer.Logging
+  PUBLIC
+  FILE_SET HEADERS
+  BASE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../../include"
+  FILES
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer/Logging/ConsoleLogger.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer/Logging/Logger.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer/Logging/LoggerDelegate.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer/Logging/LogLevel.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer/Logging/ThreadedLogger.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer/Logging/FileLogger.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer/Logging/CompositeLogger.hpp"
 )
 
 find_package(chimer-install-library REQUIRED)

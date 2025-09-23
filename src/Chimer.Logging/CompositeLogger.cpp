@@ -1,4 +1,4 @@
-#include "Chimer.Logging/CompositeLogger.hpp"
+#include "Chimer/Logging/CompositeLogger.hpp"
 
 namespace Chimer::Logging
 {

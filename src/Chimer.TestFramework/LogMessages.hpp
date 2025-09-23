@@ -2,7 +2,7 @@
 #include "Chimer/TestFramework/TestFailureResult.hpp"
 #include "Chimer/TestFramework/TestSuiteResult.hpp"
 
-#include "Chimer.Logging/LoggerDelegate.hpp"
+#include "Chimer/Logging/LoggerDelegate.hpp"
 
 #include <string>
 #include <sstream>

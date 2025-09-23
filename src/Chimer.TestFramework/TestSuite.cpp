@@ -2,7 +2,7 @@
 #include "Chimer/TestFramework/Test.hpp"
 #include "LogMessages.hpp"
 
-#include "Chimer.Logging/LoggerDelegate.hpp"
+#include "Chimer/Logging/LoggerDelegate.hpp"
 
 #include <iostream>
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Chimer.Logging/LoggerDelegate.hpp"
+#include "Chimer/Logging/LoggerDelegate.hpp"
 
 #include "Win32Helpers.hpp"
 
