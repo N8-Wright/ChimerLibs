@@ -1,3 +1,4 @@
+# Taken from: https://github.com/bemanproject/exemplar/blob/main/infra/cmake/beman-install-library-config.cmake
 include_guard(GLOBAL)
 
 function(chimer_install_library name)
