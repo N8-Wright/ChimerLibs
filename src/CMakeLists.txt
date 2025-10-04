@@ -3,6 +3,8 @@ add_subdirectory(Chimer.TestFramework)
 add_subdirectory(Chimer.IO)
 add_subdirectory(Chimer.Message)
 if (${CHIMER_TESTING})
+  include(CTest)
+  enable_testing()
   add_subdirectory(Chimer.TestFramework.Tests)
 endif()
 

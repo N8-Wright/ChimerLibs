@@ -9,3 +9,6 @@ add_executable(Chimer.TestFramework.Tests
 )
 
 target_link_libraries(Chimer.TestFramework.Tests Chimer::TestFramework)
+
+include(CTest)
+add_test(NAME Chimer.TestFramework.Tests COMMAND Chimer.TestFramework.Tests)
