@@ -11,7 +11,12 @@
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
                 "CMAKE_COMPILE_WARNING_AS_ERROR": "ON",
                 "CMAKE_CXX_EXTENSIONS": "OFF",
-                "CMAKE_CXX_VISIBILITY_PRESET": "hidden"
+                "CMAKE_CXX_VISIBILITY_PRESET": "hidden",
+                "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+                "CMAKE_PREFIX_PATH": {
+                    "type": "STRING",
+                    "value": "${sourceDir}/infra/cmake"
+                }
             }
         },
         {
@@ -19,8 +24,7 @@
             "hidden": true,
             "cacheVariables":
             {
-                "CMAKE_BUILD_TYPE": "Debug",
-                "CHIMER_BUILDSYS_SANITIZER": "MaxSan"
+                "CMAKE_BUILD_TYPE": "Debug"
             }
         },
         {
@@ -42,8 +46,8 @@
             ],
             "cacheVariables":
             {
-                "CMAKE_CXX_FLAGS": "/MP /D_CRT_SECURE_NO_WARNINGS /W4 /w14242 /w14254 /w14263 /w14265 /w14287 /we4289 /w14296 /w14311 /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14640 /w14826 /w14905 /w14906 /w14928",
-                "CMAKE_TOOLCHAIN_FILE": "infra/cmake/MsvcToolchain.cmake"
+                "CMAKE_CXX_FLAGS": "/EHsc /MP /D_CRT_SECURE_NO_WARNINGS /W4 /w14242 /w14254 /w14263 /w14265 /w14287 /we4289 /w14296 /w14311 /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14640 /w14826 /w14905 /w14906 /w14928",
+                "VCPKG_CXX_FLAGS": "/EHsc"
             }
         },
         {
@@ -57,7 +61,7 @@
             "cacheVariables":
             {
                 "CMAKE_CXX_FLAGS": "/Gy /MP /D_CRT_SECURE_NO_WARNINGS /W4 /w14242 /w14254 /w14263 /w14265 /w14287 /we4289 /w14296 /w14311 /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14640 /w14826 /w14905 /w14906 /w14928",
-                "CMAKE_TOOLCHAIN_FILE": "infra/cmake/MsvcToolchain.cmake"
+                "VCPKG_CXX_FLAGS": "/EHsc"
             }
         }
     ]
