@@ -24,8 +24,8 @@ int main()
         runner.Add(clientSocket);
 
         std::string message = "Hello, world";
-        clientSocket.Write(message, [&message](size_t bytesWritten) {
-            std::cout << "Wrote " << message.substr(bytesWritten) << std::endl;
+        clientSocket.Write(message, [&message](const size_t bytesWritten) {
+            std::cout << "Wrote '" << message.substr(0, bytesWritten) << "'" << std::endl;
             stopSource.request_stop();
         });
 
