@@ -1,5 +1,5 @@
 #pragma once
-#include "Chimer.Core/Concepts.hpp"
+#include "../Core/Concepts.hpp"
 
 #include "Chimer/TestFramework/TestSuite.hpp"
 #include "Chimer/TestFramework/TestFailureResult.hpp"
