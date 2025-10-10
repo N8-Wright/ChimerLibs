@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Chimer.IO/Win32/OverlappedData.hpp"
-#include "Chimer.IO/SocketType.hpp"
-#include "Chimer.IO/SocketFamily.hpp"
-#include "Chimer.IO/SocketProtocol.hpp"
+#include "Chimer/IO/Win32/OverlappedData.hpp"
+#include "Chimer/IO/SocketType.hpp"
+#include "Chimer/IO/SocketFamily.hpp"
+#include "Chimer/IO/SocketProtocol.hpp"
 
 #include <span>
 #include <system_error>

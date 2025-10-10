@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Chimer.IO/Events.hpp"
+#include "Chimer/IO/Events.hpp"
 
 #include <winsock2.h>
 #include <vector>

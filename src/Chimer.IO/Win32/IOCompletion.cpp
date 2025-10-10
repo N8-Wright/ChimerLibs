@@ -1,9 +1,9 @@
-#include "Chimer.IO/Win32/IOCompletion.hpp"
-#include "Chimer.IO/Win32/OverlappedData.hpp"
+#include "Chimer/IO/Win32/IOCompletion.hpp"
+#include "Chimer/IO/Win32/OverlappedData.hpp"
+#include "Chimer/IO/Win32/Socket.hpp"
 
 #include "Win32Helpers.hpp"
 #include "LogMessages.hpp"
-#include "Chimer.IO/Win32/Socket.hpp"
 
 #include <system_error>
 #include <iostream>

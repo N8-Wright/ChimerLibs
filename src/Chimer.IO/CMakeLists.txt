@@ -17,14 +17,13 @@ target_sources(Chimer.IO
   FILE_SET HEADERS
   BASE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../../include"
   FILES
-    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer.IO/Socket.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer.IO/Events.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer.IO/IOCompletion.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer.IO/IOContext.hpp"
-    
-    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer.IO/Win32/OverlappedData.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer.IO/Win32/Socket.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer.IO/Win32/IOCompletion.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer/IO/Socket.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer/IO/Events.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer/IO/IOCompletion.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer/IO/IOContext.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer/IO/Win32/OverlappedData.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer/IO/Win32/Socket.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../include/Chimer/IO/Win32/IOCompletion.hpp"
 )
 
 find_package(chimer-install-library REQUIRED)
