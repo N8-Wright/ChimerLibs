@@ -1,4 +1,4 @@
-#include "Chimer.Message/Message.hpp"
+#include "Chimer/Message/Message.hpp"
 
 #ifdef _WIN32
 #include <winsock2.h>
