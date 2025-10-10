@@ -6,6 +6,7 @@ if (${CHIMER_TESTING})
   include(CTest)
   enable_testing()
   add_subdirectory(Chimer.TestFramework.Tests)
+  add_subdirectory(Chimer.Message.Tests)
 endif()
 
 if (${CHIMER_EXAMPLES})

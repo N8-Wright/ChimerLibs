@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include <string_view>
 #include <vector>
 #include <cstdint>
 #include <span>
@@ -11,7 +11,7 @@ namespace Chimer::Message
     {
         using MessageBuffer = std::vector<uint8_t>;
         template<typename T>
-        static void Serialize(MessageBuffer& buffer, const T& obj)
+        static void Serialize(MessageBuffer& buffer, const T&)
         {
             static_assert(false, "Serialize function not supported");
         }
@@ -41,6 +41,9 @@ namespace Chimer::Message
 
     template<>
     void Message::Serialize(MessageBuffer& buffer, const uint32_t& val);
+
+    template<>
+    void Message::Serialize(MessageBuffer& buffer, const std::string_view& str);
 
     template<>
     int8_t Message::Deserialize<int8_t>(std::span<char> buffer);
