@@ -5,6 +5,7 @@ add_library(Chimer.TestFramework
   TestCount.cpp
   LogMessages.hpp
   TestLogger.cpp
+  TestException.cpp
 )
 
 target_sources(Chimer.TestFramework

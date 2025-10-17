@@ -1,5 +1,7 @@
 #include "Chimer/TestFramework/TestSuite.hpp"
 #include "Chimer/TestFramework/Test.hpp"
+#include "Chimer/TestFramework/TestException.hpp"
+
 #include "LogMessages.hpp"
 
 #include "Chimer/Logging/LoggerDelegate.hpp"
@@ -39,18 +41,31 @@ namespace Chimer::TestFramework
         TestSuiteResult suiteResult{};
         for (auto& test : m_tests)
         {
-            test->Run();
-            if (test->Failed())
+            try
             {
-                auto result = test->GetFailureResult();
-                LogMessages::TestFailure(m_logger, m_name, result);
-                ++suiteResult.Failed;
-                suiteResult.FailedTests.push_back(std::move(result));
+                test->Run();
+                if (test->Failed())
+                {
+                    auto result = test->GetFailureResult();
+                    LogMessages::TestFailure(m_logger, m_name, result);
+                    ++suiteResult.Failed;
+                    suiteResult.FailedTests.push_back(std::move(result));
+                }
+                else
+                {
+                    LogMessages::TestSuccess(m_logger, m_name, test->TestName());
+                    ++suiteResult.Passed;
+                }
             }
-            else
+            catch (const TestException& e)
             {
-                LogMessages::TestSuccess(m_logger, m_name, test->TestName());
-                ++suiteResult.Passed;
+                auto reason = std::string(e.what());
+                test->MarkFailed(std::move(reason), e.SourceLocation());
+            }
+            catch (const std::exception& e)
+            {
+                auto reason = std::string(e.what());
+                test->MarkFailed(std::move(reason), std::source_location::current());
             }
         }
 
