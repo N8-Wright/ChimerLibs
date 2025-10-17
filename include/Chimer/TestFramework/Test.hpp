@@ -4,6 +4,7 @@
 #include "Chimer/TestFramework/TestSuite.hpp"
 #include "Chimer/TestFramework/TestFailureResult.hpp"
 #include "Chimer/TestFramework/TestDriver.hpp"
+#include "Chimer/TestFramework/TestException.hpp"
 
 #include <string>
 #include <string_view>
@@ -90,6 +91,20 @@ namespace Chimer::TestFramework
             {
                 static_assert(false, "Cannot compare these types");
                 return false;
+            }
+        }
+
+        std::exception_ptr AssertThrows(std::function<void()> action,
+                                        const std::source_location location = std::source_location::current())
+        {
+            try
+            {
+                action();
+                throw TestException("Action did not result in an exception", location);
+            }
+            catch (...)
+            {
+                return std::current_exception();
             }
         }
 

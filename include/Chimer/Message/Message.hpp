@@ -15,13 +15,6 @@ namespace Chimer::Message
         {
             static_assert(false, "Serialize function not supported");
         }
-
-        template<typename T>
-        static T Deserialize(std::span<char> buffer)
-        {
-            static_assert(false, "Deserialize function not supported");
-            return {};
-        }
     };
 
     template<>
@@ -44,7 +37,4 @@ namespace Chimer::Message
 
     template<>
     void Message::Serialize(MessageBuffer& buffer, const std::string_view& str);
-
-    template<>
-    int8_t Message::Deserialize<int8_t>(std::span<char> buffer);
 }

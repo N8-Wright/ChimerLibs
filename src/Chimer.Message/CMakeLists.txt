@@ -1,5 +1,6 @@
 add_library(Chimer.Message
   Message.cpp
+  MessageDeserializer.cpp
 )
 
 target_sources(Chimer.Message
@@ -12,6 +13,10 @@ target_sources(Chimer.Message
 
 find_package(chimer-install-library REQUIRED)
 chimer_install_library(Chimer.Message)
+
+if (WIN32)
+  target_link_libraries(Chimer.Message PUBLIC Ws2_32)
+endif()
 
 target_link_libraries(Chimer.Message PUBLIC Microsoft.GSL::GSL)
 target_include_directories(Chimer.Message ${WARNING_GUARD} PUBLIC
