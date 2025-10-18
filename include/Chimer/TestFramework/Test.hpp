@@ -87,8 +87,8 @@ namespace Chimer::TestFramework
             }
         }
 
-        template<typename T, typename TAction>
-            requires CallableWith<TAction, T>
+        template<typename TException, typename TAction>
+            requires CallableWith<TAction, TException>
         void AssertExceptionIs(const std::exception_ptr exceptionPtr, TAction&& action, const std::source_location location = std::source_location::current())
         {
             if (!exceptionPtr)
@@ -100,7 +100,7 @@ namespace Chimer::TestFramework
             {
                 std::rethrow_exception(exceptionPtr);
             }
-            catch (const T& exception)
+            catch (const TException& exception)
             {
                 action(exception);
                 return;
