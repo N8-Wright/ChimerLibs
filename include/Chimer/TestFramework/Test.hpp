@@ -94,18 +94,44 @@ namespace Chimer::TestFramework
             }
         }
 
-        std::exception_ptr AssertThrows(std::function<void()> action,
+        template<typename T, typename Action>
+        void AssertExceptionIs(const std::exception_ptr exceptionPtr, Action&& action, const std::source_location location = std::source_location::current())
+        {
+            if (!exceptionPtr)
+            {
+                throw TestException("Provided exception pointer was null", m_testName, location);
+            }
+
+            try
+            {
+                std::rethrow_exception(exceptionPtr);
+            }
+            catch (const T& exception)
+            {
+                action(exception);
+                return;
+            }
+            catch (...)
+            {
+            }
+
+            throw TestException("Exception was not of expected type", m_testName, location);
+        }
+
+        template<typename Action>
+        std::exception_ptr AssertThrows(Action&& action,
                                         const std::source_location location = std::source_location::current())
         {
             try
             {
                 action();
-                throw TestException("Action did not result in an exception", location);
             }
             catch (...)
             {
                 return std::current_exception();
             }
+
+            throw TestException("Action did not result in an exception", m_testName, location);
         }
 
         template<typename T, typename U>

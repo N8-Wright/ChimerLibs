@@ -60,12 +60,22 @@ namespace Chimer::TestFramework
             catch (const TestException& e)
             {
                 auto reason = std::string(e.what());
-                test->MarkFailed(std::move(reason), e.SourceLocation());
+                test->MarkFailed(std::move(reason), e.GetSourceLocation());
+
+                auto result = test->GetFailureResult();
+                LogMessages::TestFailure(m_logger, m_name, result);
+                ++suiteResult.Failed;
+                suiteResult.FailedTests.push_back(std::move(result));
             }
             catch (const std::exception& e)
             {
                 auto reason = std::string(e.what());
                 test->MarkFailed(std::move(reason), std::source_location::current());
+
+                auto result = test->GetFailureResult();
+                LogMessages::TestFailure(m_logger, m_name, result);
+                ++suiteResult.Failed;
+                suiteResult.FailedTests.push_back(std::move(result));
             }
         }
 
