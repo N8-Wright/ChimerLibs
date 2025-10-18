@@ -44,35 +44,19 @@ namespace Chimer::TestFramework
             try
             {
                 test->Run();
-                if (test->Failed())
-                {
-                    auto result = test->GetFailureResult();
-                    LogMessages::TestFailure(m_logger, m_name, result);
-                    ++suiteResult.Failed;
-                    suiteResult.FailedTests.push_back(std::move(result));
-                }
-                else
-                {
-                    LogMessages::TestSuccess(m_logger, m_name, test->TestName());
-                    ++suiteResult.Passed;
-                }
+                LogMessages::TestSuccess(m_logger, m_name, test->TestName());
+                ++suiteResult.Passed;
             }
             catch (const TestException& e)
             {
-                auto reason = std::string(e.what());
-                test->MarkFailed(std::move(reason), e.GetSourceLocation());
-
-                auto result = test->GetFailureResult();
+                TestFailureResult result{ e.GetTestName(), e.what(), e.GetSourceLocation() };
                 LogMessages::TestFailure(m_logger, m_name, result);
-                ++suiteResult.Failed;
                 suiteResult.FailedTests.push_back(std::move(result));
+                ++suiteResult.Failed;
             }
             catch (const std::exception& e)
             {
-                auto reason = std::string(e.what());
-                test->MarkFailed(std::move(reason), std::source_location::current());
-
-                auto result = test->GetFailureResult();
+                TestFailureResult result{ std::string(test->TestName()), e.what(), std::source_location::current() };
                 LogMessages::TestFailure(m_logger, m_name, result);
                 ++suiteResult.Failed;
                 suiteResult.FailedTests.push_back(std::move(result));

@@ -34,19 +34,11 @@ namespace Chimer::TestFramework
     class Test
     {
         std::string m_testName;
-        bool m_failed;
-        std::string m_failedReason;
-        std::source_location m_failedLocation;
 
     public:
         explicit Test(std::string_view testName);
         virtual ~Test() = default;
-        [[nodiscard]] bool Failed() const noexcept;
-        void MarkFailed(std::string reason, const std::source_location& location);
-
-        [[nodiscard]] std::string_view Reason() const noexcept;
         [[nodiscard]] std::string_view TestName() const noexcept;
-        [[nodiscard]] TestFailureResult GetFailureResult() const;
 
         virtual void Run() = 0;
 
@@ -242,13 +234,6 @@ namespace Chimer::TestFramework
         }
     };
 }
-
-#define ASSERT_FALSE(expr)                                                                    \
-    if (expr)                                                                                 \
-    {                                                                                         \
-        MarkFailed("Expression was not false: '" #expr "'", std::source_location::current()); \
-        return;                                                                               \
-    }
 
 #define TEST(testClass, testName)                                                 \
     class testClass##_##testName : public Chimer::TestFramework::Test             \
