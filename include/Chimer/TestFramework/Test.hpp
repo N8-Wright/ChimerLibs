@@ -172,7 +172,7 @@ namespace Chimer::TestFramework
         }
 
         template<typename T, typename U>
-        bool AssertGreaterThan(const T& lhs,
+        void AssertGreaterThan(const T& lhs,
                                const U& rhs,
                                const std::source_location location = std::source_location::current())
         {
@@ -182,16 +182,12 @@ namespace Chimer::TestFramework
                 {
                     std::stringstream failure;
                     failure << FormatValue(lhs) << " is not greater than " << FormatValue(rhs);
-                    MarkFailed(failure.str(), location);
-                    return false;
+                    throw TestException(failure.str(), m_testName, location);
                 }
-
-                return true;
             }
             else
             {
                 static_assert(false, "Cannot compare these types");
-                return false;
             }
         }
 
@@ -233,10 +229,6 @@ namespace Chimer::TestFramework
         MarkFailed("Expression was not true: '" #expr "'", std::source_location::current()); \
         return;                                                                              \
     }
-
-#define ASSERT_GT(lhs, rhs)           \
-    if (!AssertGreaterThan(lhs, rhs)) \
-    return
 
 #define ASSERT_LT(lhs, rhs)        \
     if (!AssertLessThan(lhs, rhs)) \
