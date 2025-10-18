@@ -1,5 +1,5 @@
 #pragma once
-#include "../Core/Concepts.hpp"
+#include "Chimer/Core/Concepts.hpp"
 
 #include "Chimer/TestFramework/TestSuite.hpp"
 #include "Chimer/TestFramework/TestFailureResult.hpp"
@@ -204,12 +204,39 @@ namespace Chimer::TestFramework
             }
         }
 
-        template<typename Expr>
-        void AssertTrue(Expr&& expr, const std::source_location location = std::source_location::current())
+        template<Callable TExpr>
+        void AssertTrue(TExpr&& expr, const std::source_location location = std::source_location::current())
+        {
+            if (!expr())
+            {
+                throw TestException("Expression was not true", m_testName, location);
+            }
+        }
+
+        template<typename TExpr>
+        void AssertTrue(TExpr&& expr, const std::source_location location = std::source_location::current())
         {
             if (!expr)
             {
                 throw TestException("Expression was not true", m_testName, location);
+            }
+        }
+
+        template <Callable TExpr>
+        void AssertFalse(TExpr&& expr, const std::source_location location = std::source_location::current())
+        {
+            if (expr())
+            {
+                throw TestException("Expression was not false", m_testName, location);
+            }
+        }
+
+        template<typename Expr>
+        void AssertFalse(Expr&& expr, const std::source_location location = std::source_location::current())
+        {
+            if (expr)
+            {
+                throw TestException("Expression was not false", m_testName, location);
             }
         }
     };
