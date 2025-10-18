@@ -4,11 +4,28 @@ TEST_SUITE_DEFINE(TrueTests);
 
 TEST(TrueTests, Booleans)
 {
-	ASSERT_TRUE(true);
-	ASSERT_TRUE(!false);
+    AssertTrue(true);
+    AssertTrue(!false);
 }
 
 TEST(TrueTests, Weird)
 {
-	ASSERT_TRUE("str");
+    AssertTrue("str");
+}
+
+TEST(TrueTests, Expressions)
+{
+    AssertTrue(1 != 0);
+    AssertTrue(std::string("abc") == std::string("abc"));
+    AssertTrue(std::strcmp("9999", "123") != 0);
+    AssertTrue([]() {
+        if constexpr (1 + 1 == 2)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    });
 }

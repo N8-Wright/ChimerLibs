@@ -203,6 +203,15 @@ namespace Chimer::TestFramework
                 static_assert(false, "Cannot compare these types");
             }
         }
+
+        template<typename Expr>
+        void AssertTrue(Expr&& expr, const std::source_location location = std::source_location::current())
+        {
+            if (!expr)
+            {
+                throw TestException("Expression was not true", m_testName, location);
+            }
+        }
     };
 }
 
@@ -211,12 +220,6 @@ namespace Chimer::TestFramework
     {                                                                                         \
         MarkFailed("Expression was not false: '" #expr "'", std::source_location::current()); \
         return;                                                                               \
-    }
-#define ASSERT_TRUE(expr)                                                                    \
-    if (!(expr))                                                                             \
-    {                                                                                        \
-        MarkFailed("Expression was not true: '" #expr "'", std::source_location::current()); \
-        return;                                                                              \
     }
 
 #define TEST(testClass, testName)                                                 \
