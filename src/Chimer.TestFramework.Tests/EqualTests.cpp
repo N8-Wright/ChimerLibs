@@ -4,32 +4,32 @@ TEST_SUITE_DEFINE(EqualTests);
 
 TEST(EqualTests, Integers)
 {
-    ASSERT_EQ(100, 100);
+    AssertEqual(100, 100);
 }
 
 TEST(EqualTests, Longs)
 {
-    ASSERT_EQ(1L, 1L);
+    AssertEqual(1L, 1L);
 }
 
 TEST(EqualTests, Floats)
 {
-    ASSERT_EQ(77.7f, 77.7f);
+    AssertEqual(77.7f, 77.7f);
 }
 
 TEST(EqualTests, Doubles)
 {
-    ASSERT_EQ(99.9, 99.9);
+    AssertEqual(99.9, 99.9);
 }
 
 TEST(EqualTests, Strings)
 {
-    ASSERT_EQ(std::string("foo"), std::string("foo"));
+    AssertEqual(std::string("foo"), std::string("foo"));
 }
 
 TEST(EqualTests, StringViews)
 {
-    ASSERT_EQ(std::string_view("yard"), std::string_view("yard"));
+    AssertEqual(std::string_view("yard"), std::string_view("yard"));
 }
 
 TEST(EqualTests, CharPointers)
@@ -37,7 +37,7 @@ TEST(EqualTests, CharPointers)
     const char* lhs = "bar";
     const char* rhs = "bar";
 
-    ASSERT_EQ(lhs, rhs);
+    AssertEqual(lhs, rhs);
 }
 
 TEST(EqualTests, CharArrays)
@@ -45,7 +45,7 @@ TEST(EqualTests, CharArrays)
     constexpr char lhs[] = "baz";
     constexpr char rhs[] = "baz";
 
-    ASSERT_EQ(lhs, rhs);
+    AssertEqual(lhs, rhs);
 }
 
 class Foo
@@ -62,8 +62,8 @@ public:
 
 TEST(EqualTests, Foo)
 {
-    Foo lhs{ 1, 9.1 };
-    Foo rhs{ 1, 9.1 };
+    constexpr Foo lhs{ 1, 9.1 };
+    constexpr Foo rhs{ 1, 9.1 };
 
-    ASSERT_EQ(lhs, rhs);
+    AssertEqual(lhs, rhs);
 }

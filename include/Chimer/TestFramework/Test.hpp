@@ -135,7 +135,7 @@ namespace Chimer::TestFramework
         }
 
         template<typename T, typename U>
-        bool AssertEqual(const T& lhs,
+        void AssertEqual(const T& lhs,
                          const U& rhs,
                          const std::source_location location = std::source_location::current())
         {
@@ -153,11 +153,8 @@ namespace Chimer::TestFramework
                 {
                     std::stringstream failure;
                     failure << "\"" << lhs << "\" does not equal \"" << rhs << "\"";
-                    MarkFailed(failure.str(), location);
-                    return false;
+                    throw TestException(failure.str(), m_testName, location);
                 }
-
-                return true;
             }
             else if constexpr (requires { lhs != rhs; })
             {
@@ -165,16 +162,12 @@ namespace Chimer::TestFramework
                 {
                     std::stringstream failure;
                     failure << FormatValue(lhs) << " does not equal " << FormatValue(rhs);
-                    MarkFailed(failure.str(), location);
-                    return false;
+                    throw TestException(failure.str(), m_testName, location);
                 }
-
-                return true;
             }
             else
             {
                 static_assert(false, "Cannot compare these types");
-                return false;
             }
         }
 
@@ -251,10 +244,6 @@ namespace Chimer::TestFramework
 
 #define ASSERT_NOT_EQ(lhs, rhs)    \
     if (!AssertNotEqual(lhs, rhs)) \
-    return
-
-#define ASSERT_EQ(lhs, rhs)     \
-    if (!AssertEqual(lhs, rhs)) \
     return
 
 #define TEST(testClass, testName)                                                 \

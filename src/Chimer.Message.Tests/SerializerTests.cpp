@@ -20,7 +20,7 @@ TEST(SerializerTests, int8_t)
     const auto result = deserializer.Deserialize<int8_t>();
 
     // Assert
-    ASSERT_EQ(static_cast<int8_t>(233), result);
+    AssertEqual(static_cast<int8_t>(233), result);
 }
 
 TEST(SerializerTests, TooFar)
