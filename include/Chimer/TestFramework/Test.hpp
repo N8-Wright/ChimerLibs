@@ -87,8 +87,9 @@ namespace Chimer::TestFramework
             }
         }
 
-        template<typename T, typename Action>
-        void AssertExceptionIs(const std::exception_ptr exceptionPtr, Action&& action, const std::source_location location = std::source_location::current())
+        template<typename T, typename TAction>
+            requires CallableWith<TAction, T>
+        void AssertExceptionIs(const std::exception_ptr exceptionPtr, TAction&& action, const std::source_location location = std::source_location::current())
         {
             if (!exceptionPtr)
             {
@@ -111,8 +112,8 @@ namespace Chimer::TestFramework
             throw TestException("Exception was not of expected type", m_testName, location);
         }
 
-        template<typename Action>
-        std::exception_ptr AssertThrows(Action&& action,
+        template<Callable TAction>
+        std::exception_ptr AssertThrows(TAction&& action,
                                         const std::source_location location = std::source_location::current())
         {
             try
@@ -222,7 +223,7 @@ namespace Chimer::TestFramework
             }
         }
 
-        template <Callable TExpr>
+        template<Callable TExpr>
         void AssertFalse(TExpr&& expr, const std::source_location location = std::source_location::current())
         {
             if (expr())
